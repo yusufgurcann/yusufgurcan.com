@@ -1,0 +1,27 @@
+# Eğitim. period: { start: "YYYY-MM", end: "YYYY-MM", ongoing: true|false }
+
+- id: topkapi
+  order: 1
+  current: true
+  school:
+    tr: İstanbul Topkapı Üniversitesi
+    en: Istanbul Topkapı University
+  program:
+    tr: Yönetim Bilişim Sistemleri
+    en: Management Information Systems
+  status:
+    tr: 1. sınıf · devam ediyor
+    en: 1st year · ongoing
+
+- id: lise
+  order: 2
+  school:
+    tr: Şehit Öğretmen Fatma Nur Çelik Mesleki ve Teknik Anadolu Lisesi
+    en: Şehit Öğretmen Fatma Nur Çelik Vocational and Technical Anatolian High School
+  program:
+    tr: Bilişim Teknolojileri Alanı
+    en: Information Technologies Program
+  status:
+    tr: Mezun · İstanbul
+    en: Graduated · Istanbul
+  period: { start: 2021-09, end: 2025-06 }

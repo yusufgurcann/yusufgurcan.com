@@ -1,0 +1,252 @@
+---
+import Section from '@/components/ui/Section.astro';
+import Pending from '@/components/ui/Pending.astro';
+import { SECTION, journeyStopId } from '@/config/navigation';
+import type { JourneyStop } from '@/lib/content';
+import type { Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/translate';
+
+interface Props {
+  locale: Locale;
+  stops: readonly JourneyStop[];
+}
+
+const { locale, stops } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<Section id={SECTION.journey} kicker={t('journey.kicker')} title={t('journey.title')} lead={t('journey.lead')}>
+  <ol class="timeline" role="list">
+    {
+      stops.map((stop, index) => (
+        <li class="stop" id={journeyStopId(stop.id)} data-color={stop.color} tabindex="-1">
+          <span class="stop__marker" aria-hidden="true">
+            <span class="stop__block" />
+          </span>
+          <div class="stop__body">
+            <p class="stop__meta caption">
+              <span class="stop__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <span>{t(`journey.kind.${stop.kind}`)}</span>
+              <span aria-hidden="true">·</span>
+              {stop.period.text ? (
+                <span class:list={['stop__period', { 'stop__period--now': stop.period.ongoing }]}>
+                  {stop.period.text}
+                </span>
+              ) : (
+                <Pending {locale} />
+              )}
+              {stop.period.duration && (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <span>{stop.period.duration}</span>
+                </>
+              )}
+            </p>
+            <h3 class="stop__title">
+              {stop.organization}
+              <span class="stop__role">{stop.title}</span>
+            </h3>
+            <p class="stop__summary">{stop.summary}</p>
+            {stop.work.length > 0 && (
+              <div class="stop__work">
+                <p class="visually-hidden">{t('journey.work')}</p>
+                <ul role="list">
+                  {stop.work.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {stop.highlights.length > 0 && (
+              <div class="stop__highlights">
+                <p class="stop__label caption">{t('journey.highlights')}</p>
+                <ul role="list">
+                  {stop.highlights.map((item) => (
+                    <li>
+                      <strong>{item.name}</strong>
+                      <span>{item.description}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {stop.learned.length > 0 && (
+              <div class="stop__learned">
+                <p class="visually-hidden">{t('journey.learned')}</p>
+                <ul role="list">
+                  {stop.learned.map((item) => (
+                    <li>
+                      <span aria-hidden="true">↳</span> {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</Section>
+
+<style>
+  .timeline {
+    --rail-x: 1.1rem;
+    position: relative;
+    display: grid;
+    gap: var(--space-l);
+    max-width: 50rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 0.6rem;
+    bottom: 0.6rem;
+    left: calc(var(--rail-x) - 1px);
+    border-left: 2px dashed var(--line);
+  }
+
+  .stop {
+    position: relative;
+    display: grid;
+    grid-template-columns: calc(var(--rail-x) * 2) 1fr;
+    gap: var(--space-m);
+    scroll-margin-top: calc(var(--header-height) + var(--space-l));
+    border-radius: var(--radius-m);
+  }
+
+  .stop:target .stop__body,
+  .stop:focus .stop__body {
+    outline: 2px solid var(--stage);
+    outline-offset: 6px;
+    border-radius: var(--radius-s);
+  }
+
+  .stop:focus {
+    outline: none;
+  }
+
+  .stop__marker {
+    display: grid;
+    justify-items: center;
+    padding-top: 0.2rem;
+  }
+
+  .stop__block {
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 4px;
+    background: var(--stage);
+    box-shadow: var(--shadow-piece), 0 0 0 5px var(--paper);
+  }
+
+  .stop__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5em;
+    color: var(--muted);
+  }
+
+  .stop__index {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .stop__period--now {
+    color: var(--ink);
+  }
+
+  .stop__title {
+    margin-top: var(--space-xs);
+    font-size: var(--step-2);
+  }
+
+  .stop__role {
+    display: block;
+    margin-top: 0.3rem;
+    color: var(--ink-soft);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .stop__summary {
+    margin-top: var(--space-s);
+    max-width: 60ch;
+    color: var(--ink-soft);
+  }
+
+  .stop__work ul {
+    display: grid;
+    gap: var(--space-2xs);
+    margin-top: var(--space-s);
+    max-width: 62ch;
+  }
+
+  .stop__work li {
+    position: relative;
+    padding-left: 1.1rem;
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+  }
+
+  /* A tiny block as the bullet, tinted with the stop colour. */
+  .stop__work li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 2px;
+    background: var(--stage);
+  }
+
+  .stop__highlights {
+    margin-top: var(--space-m);
+  }
+
+  .stop__label {
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .stop__highlights ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    gap: var(--space-xs);
+    margin-top: var(--space-xs);
+  }
+
+  .stop__highlights li {
+    display: grid;
+    gap: 2px;
+    padding: var(--space-s) var(--space-m);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--stage);
+    border-radius: var(--radius-s);
+    background: var(--surface);
+    font-size: var(--step--1);
+    line-height: 1.4;
+  }
+
+  .stop__highlights span {
+    color: var(--muted);
+  }
+
+  .stop__learned ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs) var(--space-m);
+    margin-top: var(--space-s);
+    font-size: var(--step--1);
+  }
+
+  .stop__learned span {
+    color: var(--muted);
+  }
+</style>

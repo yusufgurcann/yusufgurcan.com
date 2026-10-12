@@ -1,0 +1,122 @@
+# "Tanışalım" sohbeti. Ziyaretçi sorar (question), Yusuf cevaplar (answer).
+# Cevaplar kısa tutulmalı; her biri bir mesaj balonu olarak görünür.
+
+- id: intro
+  order: 1
+  question:
+    tr: Merhaba! Kısaca kendinden bahseder misin?
+    en: Hi! Could you tell me a bit about yourself?
+  answer:
+    tr: >-
+      Merhaba, ben Yusuf. YBS 1. sınıftayım. Flutter ile staj ve projelerde çalıştım, şimdi iOS
+      tarafında Swift ve SwiftUI öğreniyorum. Mobil uygulama geliştirmeye odaklanıyorum.
+    en: >-
+      Hi, I’m Yusuf. I’m a first-year MIS student. I’ve worked with Flutter in internships and
+      projects, and now I’m learning Swift and SwiftUI for iOS. My focus is mobile app development.
+
+- id: junior
+  order: 2
+  question:
+    tr: Kariyerinin başındasın, değil mi?
+    en: You’re early in your career, right?
+  answer:
+    tr: >-
+      Evet, saklamıyorum. Ama çalışma hayatına lisede başladım. Aidata’da teknik serviste geçen
+      yıllarda sorumluluk almayı ve okul ile işi birlikte yürütmeyi yaşayarak öğrendim.
+    en: >-
+      Yes, and I don’t hide it. But I started working in high school, and my years in technical
+      service at Aidata taught me first-hand how to take responsibility and balance school with work.
+
+- id: real-work
+  order: 3
+  question:
+    tr: Gerçek bir projede çalıştın mı?
+    en: Have you worked on real projects?
+  answer:
+    tr: >-
+      Evet. Dijital Gen’deki stajımda Flutter ile mobil uygulama geliştirdim, REST API
+      entegrasyonları ve hata düzeltmeleri yaptım. Ayrıca bir tanıdığımın projesi olan PetJoo’ya
+      dört ay freelance destek verdim.
+    en: >-
+      Yes. During my internship at Dijital Gen I built mobile apps with Flutter and worked on REST
+      API integrations and bug fixes. I also spent four months supporting PetJoo, an
+      acquaintance’s project, as a freelancer.
+
+- id: handoff
+  order: 4
+  question:
+    tr: Sana bir iş verdiğimizde ne olur?
+    en: What happens when we give you a task?
+  answer:
+    tr: >-
+      Önce ne istendiğini netleştiririm. Sonra yaparım, test ederim, takıldığım yerde erkenden
+      haber veririm ve teslim ederim. Sürpriz yaşatmam; işin nerede olduğunu her zaman bilirsiniz.
+    en: >-
+      First I make sure I understand what’s needed. Then I build it, test it, flag it early if I
+      get stuck, and hand it over. No surprises; you always know where the work stands.
+
+- id: unknown
+  order: 5
+  question:
+    tr: Bilmediğin bir konuyla karşılaşınca ne yaparsın?
+    en: What do you do when you run into something you don’t know?
+  answer:
+    tr: >-
+      Biliyormuş gibi yapmam. Bilmediğimi söylerim, araştırırım, ekipten öğrenirim ve
+      öğrendiğimi bir projede denerim.
+    en: >-
+      I don’t pretend. I say I don’t know, look into it, learn from the team, and then try what
+      I’ve learned in a project.
+
+- id: team
+  order: 6
+  question:
+    tr: Ekiple aran nasıl?
+    en: How do you get along with a team?
+  answer:
+    tr: >-
+      İyi; bugüne kadar hep ekip içinde çalıştım. Aidata’da üretimde, Dijital Gen’de aynı kod
+      tabanında, İyiliği Kodlayanlar’da gönüllü bir ekipte. Ne yaptığımı paylaşırım, yardım
+      istemekten de yardım etmekten de çekinmem. Ekibin ritmine uyar, kendi payımı aksatmam.
+    en: >-
+      Well; I’ve always worked in teams. In production at Aidata, on a shared codebase at Dijital
+      Gen, in a volunteer team at İyiliği Kodlayanlar. I share what I’m working on, and I’m
+      comfortable both asking for help and offering it. I fit into the team’s rhythm and never
+      let my part slip.
+
+- id: feedback
+  order: 7
+  question:
+    tr: Kodun eleştirilirse?
+    en: What if your code gets criticised?
+  answer:
+    tr: Sevinirim. Geri bildirim, bir sonraki sürümün daha iyi olması demek.
+    en: I’m glad. Feedback means the next version will be better.
+
+- id: care
+  order: 8
+  question:
+    tr: Bir uygulamada en çok neye dikkat edersin?
+    en: What do you care about most in an app?
+  answer:
+    tr: >-
+      Sadece çalışmasına değil; akıcı, anlaşılır ve güvenilir olmasına. Blokla’da bir bloğun
+      parmağın altında doğru kareye oturması gibi küçük ayrıntılarla uğraşmayı seviyorum.
+    en: >-
+      Not just that it works, but that it feels smooth, clear and reliable. In Blokla I enjoy
+      sweating small details, like a block landing on exactly the right cell under your finger.
+
+- id: goal
+  order: 9
+  question:
+    tr: Nasıl bir yerde çalışmak istiyorsun?
+    en: Where would you like to work?
+  answer:
+    tr: >-
+      Gerçek ürünler geliştiren bir mobil ekipte. Yükü tek başına sırtlayan biri değil; işini
+      güvenle teslim eden, toplantıda fikrini söyleyen, daha iyi bir yol gördüğünde öneren ve
+      zamanla ekibe yön vermeye katkı sunan biri olmak istiyorum.
+    en: >-
+      In a mobile team that builds real products. Not someone who carries the whole load alone,
+      but someone who delivers reliably, speaks up with ideas, suggests a better way when they
+      see one, and over time helps shape the team’s direction.

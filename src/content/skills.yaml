@@ -1,0 +1,79 @@
+# Beceriler. Seviye/yüzde yerine her teknolojinin nerede öğrenildiği/kullanıldığı yazılır.
+
+- id: flutter
+  order: 1
+  title:
+    tr: Staj ve projelerde kullandığım
+    en: Used in internships and projects
+  description:
+    tr: Gerçek projelerde deneyim kazandığım alan.
+    en: Where I’ve gained experience on real projects.
+  items:
+    - name: Flutter & Dart
+      context:
+        tr: Dijital Gen stajı · PetJoo · İyiliği Kodlayanlar · kişisel projeler
+        en: Dijital Gen internship · PetJoo · İyiliği Kodlayanlar · personal projects
+    - name: REST API
+      context:
+        tr: Uplide ve Dijital Gen’de entegrasyonlar · Alışveriş Kapsülü
+        en: Integrations at Uplide and Dijital Gen · Alışveriş Kapsülü
+    - name: Firebase
+      context:
+        tr: Alışveriş Kapsülü (Auth, Firestore) · İyiliği Kodlayanlar
+        en: Alışveriş Kapsülü (Auth, Firestore) · İyiliği Kodlayanlar
+    - name: SQLite
+      context:
+        tr: Stok Takip uygulamasında çevrimdışı veri
+        en: Offline data in the Stok Takip app
+
+- id: ios
+  order: 2
+  title:
+    tr: Öğreniyorum, proje geliştiriyorum
+    en: Learning and building projects
+  description:
+    tr: 'Kariyerimde ilerlemek istediğim yön: iOS.'
+    en: 'The direction I want to grow my career in: iOS.'
+  items:
+    - name: Swift
+      context:
+        tr: Öğrenme aşamasında · Blokla ile pratik
+        en: Learning · practising through Blokla
+    - name: SwiftUI
+      context:
+        tr: Öğrenme aşamasında · Blokla’nın arayüzü
+        en: Learning · Blokla’s interface
+    - name: Objective-C
+      context:
+        tr: iOS öğrenme sürecimde tanıştığım dil
+        en: Met along the way while learning iOS
+
+- id: tools
+  order: 3
+  title:
+    tr: Araçlar ve çalışma şekli
+    en: Tools and ways of working
+  description:
+    tr: Geliştirme sürecinin geri kalanı.
+    en: The rest of the development process.
+  items:
+    - name: Git & GitHub
+      context:
+        tr: Dijital Gen’de ekip çalışması · kişisel projeler
+        en: Teamwork at Dijital Gen · personal projects
+    - name: Postman
+      context:
+        tr: REST API çalışmalarında
+        en: When working with REST APIs
+    - name: Figma
+      context:
+        tr: Arayüz çalışmalarında
+        en: When working on interfaces
+    - name: Clean Code
+      context:
+        tr: İyiliği Kodlayanlar eğitiminde uygulamalı olarak
+        en: Practised in the İyiliği Kodlayanlar training
+    - name: Responsive UI · HTML, CSS, JS
+      context:
+        tr: Web projeleri
+        en: Web projects

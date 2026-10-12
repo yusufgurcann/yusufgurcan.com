@@ -1,0 +1,60 @@
+---
+/**
+ * Head metadata: title, description, canonical / hreflang alternates,
+ * Open Graph and a schema.org Person. Absolute URLs are only emitted when
+ * `site` is configured (PUBLIC_SITE_URL), so nothing points at a made-up domain.
+ */
+import { LOCALES, LOCALE_TAGS, DEFAULT_LOCALE, homePath, type Locale } from '@/i18n/locales';
+import { site } from '@/config/site';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  /** Short job title for structured data. */
+  jobTitle: string;
+  knowsAbout?: readonly string[];
+  noindex?: boolean;
+}
+
+const { locale, title, description, jobTitle, knowsAbout = [], noindex = false } = Astro.props;
+const base = Astro.site;
+const absolute = (path: string) => (base ? new URL(path, base).href : null);
+
+const canonical = absolute(Astro.url.pathname);
+const alternates = LOCALES.map((l) => ({ hreflang: LOCALE_TAGS[l], href: absolute(homePath(l)) }));
+const xDefault = absolute(homePath(DEFAULT_LOCALE));
+
+const sameAs = [site.contact.github, site.contact.linkedin].filter((v): v is string => v !== null);
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  jobTitle,
+  address: { '@type': 'PostalAddress', addressLocality: site.location },
+  knowsAbout,
+  ...(canonical ? { url: canonical } : {}),
+  ...(sameAs.length > 0 ? { sameAs } : {}),
+};
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+{noindex && <meta name="robots" content="noindex" />}
+{canonical && <link rel="canonical" href={canonical} />}
+{
+  !noindex &&
+    alternates.map(({ hreflang, href }) => href && <link rel="alternate" hreflang={hreflang} href={href} />)
+}
+{!noindex && xDefault && <link rel="alternate" hreflang="x-default" href={xDefault} />}
+
+<meta property="og:type" content="profile" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:locale" content={LOCALE_TAGS[locale].replace('-', '_')} />
+{canonical && <meta property="og:url" content={canonical} />}
+<meta name="twitter:card" content="summary" />
+{site.googleSiteVerification && <meta name="google-site-verification" content={site.googleSiteVerification} />}
+{!noindex && <link rel="sitemap" href="/sitemap-index.xml" />}
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(person)} />

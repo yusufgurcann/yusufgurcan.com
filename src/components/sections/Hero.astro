@@ -1,0 +1,153 @@
+---
+import GlanceCard from '@/components/hero/GlanceCard.astro';
+import LinkButton from '@/components/ui/LinkButton.astro';
+import { SECTION } from '@/config/navigation';
+import { site } from '@/config/site';
+import type { Profile } from '@/lib/content';
+import type { Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/translate';
+
+interface Props {
+  locale: Locale;
+  profile: Profile;
+}
+
+const { locale, profile } = Astro.props;
+const t = useTranslations(locale);
+const [firstName, ...rest] = site.name.split(' ');
+const lastName = rest.join(' ');
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__inner container">
+    <div class="hero__text">
+      {
+        site.openToWork && (
+          <p class="hero__status caption">
+            <span class="hero__dot" aria-hidden="true" />
+            {t('hero.available')}
+          </p>
+        )
+      }
+      <h1 id="hero-title" class="hero__title">
+        <span class="hero__eyebrow">{t('hero.eyebrow')}</span>
+        {firstName} <em>{lastName}</em>
+      </h1>
+      <p class="hero__role caption">{profile.role} · {site.location}</p>
+      <p class="hero__headline">{profile.headline}</p>
+      <p class="hero__intro">{profile.intro}</p>
+      <div class="hero__actions">
+        <LinkButton href={`#${SECTION.contact}`}>{t('hero.cta.secondary')}</LinkButton>
+        <LinkButton href={`#${SECTION.why}`} variant="ghost">
+          {t('hero.cta.why')} <span aria-hidden="true">↓</span>
+        </LinkButton>
+        {
+          site.contact.cv && (
+            <LinkButton href={site.contact.cv[locale]} variant="ghost" download>
+              {t('hero.cta.cv')}
+            </LinkButton>
+          )
+        }
+      </div>
+    </div>
+
+    <div class="hero__visual">
+      <GlanceCard glance={profile.glance} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(2.5rem, 1rem + 6vw, 6rem) 0;
+    overflow-x: clip;
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .hero__status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    color: var(--ink-soft);
+  }
+
+  .hero__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--stage-moss);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--stage-moss) 25%, transparent);
+  }
+
+  .hero__title {
+    margin-top: var(--space-l);
+    font-size: var(--step-4);
+    line-height: 1;
+  }
+
+  .hero__title em {
+    color: var(--accent);
+  }
+
+  .hero__eyebrow {
+    display: block;
+    margin-bottom: var(--space-xs);
+    color: var(--muted);
+    font-family: var(--font-body);
+    font-size: var(--step-1);
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .hero__role {
+    margin-top: var(--space-m);
+    color: var(--ink-soft);
+  }
+
+  .hero__headline {
+    margin-top: var(--space-l);
+    max-width: 30ch;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-variation-settings: 'SOFT' 60;
+    line-height: 1.25;
+  }
+
+  .hero__intro {
+    margin-top: var(--space-m);
+    max-width: 52ch;
+    color: var(--ink-soft);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+    margin-top: var(--space-l);
+  }
+
+  .hero__visual {
+    display: grid;
+    justify-items: end;
+  }
+
+  @media (max-width: 60rem) {
+    .hero__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__visual {
+      justify-items: start;
+    }
+  }
+</style>

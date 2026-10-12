@@ -1,0 +1,18 @@
+{
+  // "Run and Debug" (F5) → "Siteyi çalıştır": geliştirme sunucusunu başlatır ve tarayıcıyı açar.
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Siteyi çalıştır",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev",
+      "cwd": "${workspaceFolder}",
+      "serverReadyAction": {
+        "pattern": "localhost:(\\d+)",
+        "uriFormat": "http://localhost:%s",
+        "action": "openExternally"
+      }
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+---
+import Section from '@/components/ui/Section.astro';
+import { SECTION } from '@/config/navigation';
+import type { EducationEntry } from '@/lib/content';
+import type { Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/translate';
+
+interface Props {
+  locale: Locale;
+  entries: readonly EducationEntry[];
+}
+
+const { locale, entries } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<Section id={SECTION.education} kicker={t('education.kicker')} title={t('education.title')}>
+  <ul class="education" role="list">
+    {
+      entries.map((entry) => (
+        <li class="school">
+          <h3 class="school__name">{entry.school}</h3>
+          <p class="school__program">{entry.program}</p>
+          <p class="school__status caption">
+            {entry.status}
+            {entry.period?.text && <span> · {entry.period.text}</span>}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
+
+<style>
+  .education {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-m);
+  }
+
+  .school {
+    padding: var(--space-l);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-m);
+    background: var(--surface);
+  }
+
+  .school__name {
+    font-size: var(--step-2);
+  }
+
+  .school__program {
+    margin-top: var(--space-xs);
+    font-weight: 500;
+  }
+
+  .school__status {
+    margin-top: var(--space-s);
+    color: var(--muted);
+  }
+</style>

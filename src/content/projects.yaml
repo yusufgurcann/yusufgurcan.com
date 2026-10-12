@@ -1,0 +1,118 @@
+# Projeler. Yeni bir proje eklemek için aynı yapıda yeni bir öğe ekleyin.
+#
+# display     : featured (en üstte büyük vitrin) | card (normal kart) | mention (sadece adıyla "Ayrıca" satırında)
+# icon        : /public altındaki ikon yolu, ör. /projects/blokla/icon.png
+# screenshots : [{ src: /projects/blokla/1.png, alt: { tr, en } }]
+#               Boşsa, vitrin projesinde arayüzden esinlenen çizim gösterilir.
+# context     : projenin türü (kişisel, okul, gönüllü…)
+# work        : yaptıklarım, madde madde (isteğe bağlı)
+# status      : null bırakılırsa geliştirme ortamında "eklenecek" olarak görünür, yayında gizlenir.
+# links       : [{ label: { tr, en }, url: https://... }]  (örn. GitHub deposu, App Store sayfası)
+# color       : clay | amber | sea | sky | plum | moss | rose | ink
+
+- id: blokla
+  order: 1
+  display: featured
+  name: Blokla!
+  color: clay
+  icon: /projects/blokla/icon.png
+  # Ekran görüntüleri hazır olunca public/projects/blokla/ altına koyup buraya ekleyin:
+  # screenshots:
+  #   - src: /projects/blokla/oyun.png
+  #     alt: { tr: Oyun ekranı, en: Game screen }
+  screenshots: []
+  context: { tr: Kişisel proje · iOS, en: Personal project · iOS }
+  tagline:
+    tr: Sade ve akıcı bir blok bulmaca oyunu
+    en: A simple, smooth block puzzle game
+  purpose:
+    tr: >-
+      Parçaları ızgaraya yerleştirip satır ve sütunları temizlediğin, sakin ama akıcı bir blok
+      bulmaca deneyimi. Bir fikri uygulamaya dönüştürürken ürün geliştirme sürecini baştan sona
+      yaşadığım proje.
+    en: >-
+      A calm but snappy block puzzle where you place pieces on a grid and clear rows and columns.
+      The project where I’m going through the whole product development process, from idea to app.
+  role:
+    tr: Kişisel projem. Oyunun geliştirilmesini kendim yürütüyorum.
+    en: My personal project. I handle the game’s development myself.
+  work:
+    tr:
+      - SwiftUI ile arayüz; oyun kurallarını arayüzden ayıran, test edilebilir bir Swift Package çekirdeği
+      - Farklı görünümler sunan tema sistemi
+      - Türkçe ve İngilizce dil desteği
+    en:
+      - SwiftUI interface, with a testable Swift Package core that keeps game rules apart from the UI
+      - A theme system offering different looks
+      - Turkish and English localization
+  stack: [Swift, SwiftUI, Swift Package]
+  status:
+    tr: Geliştirme sürüyor · Yayın durumu henüz kesin değil
+    en: In development · Release not yet decided
+  focus:
+    tr:
+      - Blokların ızgaraya doğru yerleşmesi
+      - Dokunmatik kontrol hassasiyeti
+      - Skor dengesi
+      - Akıcı animasyonlar
+    en:
+      - Placing blocks correctly on the grid
+      - Touch control precision
+      - Score balance
+      - Smooth animations
+  links: []
+
+- id: iyiligi-kodlayanlar
+  order: 2
+  name: İyiliği Kodlayanlar
+  color: moss
+  context: { tr: Gönüllü ekip projesi · Flutter, en: Volunteer team project · Flutter }
+  tagline:
+    tr: Psikologlar ile danışanları buluşturan mobil uygulama
+    en: A mobile app connecting psychologists with clients
+  purpose:
+    tr: >-
+      Psikologlar ile danışanları bir araya getirmeyi amaçlayan sosyal fayda odaklı bir mobil
+      uygulama geliştirmek.
+    en: >-
+      To build a social-impact mobile app that aims to bring psychologists and clients together.
+  role:
+    tr: >-
+      AB destekli bir yıllık programın ilk altı ayında öğrenci olarak Flutter eğitimi aldım;
+      son altı ayında uygulamanın ekibinde gönüllü Flutter geliştirici olarak çalıştım.
+    en: >-
+      In the first six months of the one-year EU-supported program I was a Flutter student;
+      in the last six months I worked on the app’s team as a volunteer Flutter developer.
+  stack: [Flutter, Dart, Firebase, REST API, Git/GitHub]
+  status:
+    tr: Program tamamlandı · Oca 2025 – Oca 2026
+    en: Program completed · Jan 2025 – Jan 2026
+  links: []
+
+- id: alisveris-kapsulu
+  order: 3
+  name: Alışveriş Kapsülü
+  color: amber
+  context: { tr: Kişisel proje · Flutter, en: Personal project · Flutter }
+  tagline:
+    tr: Mobil alışveriş uygulaması
+    en: A mobile shopping app
+  purpose:
+    tr: >-
+      Ürünleri listeleyen, kategoriye göre filtreleyen ve favorilere eklemeye izin veren bir
+      mobil alışveriş deneyimi.
+    en: >-
+      A mobile shopping experience that lists products, filters them by category and lets users
+      save favourites.
+  work:
+    tr:
+      - Ürün listeleme, kategori bazlı filtreleme ve favoriler
+      - Firebase Authentication ve Cloud Firestore ile kullanıcı ve veri yönetimi
+      - REST API entegrasyonuyla dinamik veri akışı
+    en:
+      - Product listing, category filtering and favourites
+      - User and data management with Firebase Authentication and Cloud Firestore
+      - Dynamic data flow through REST API integration
+  stack: [Flutter, Dart, Firebase, REST API]
+  status: null
+  links: []

@@ -1,0 +1,225 @@
+# Deneyim zaman çizelgesi. `order` küçükten büyüğe sıralanır.
+#
+# period alanları:
+#   start / end   : "YYYY-MM" (ör. 2021-06) ya da sadece yıl (2021)
+#   ongoing       : hâlâ devam ediyorsa true ("şu an" etiketi)
+#   approximate   : tarih kesin değilse true ("≈" işareti)
+#   note          : hesaplanan etiket yerine gösterilecek serbest metin
+#   length        : otomatik hesaplanan süre yanıltıcıysa yerine yazılacak süre, ör. { tr: 1 yıl, en: 1 year }
+# Eğitim dışındaki duraklarda süre (ör. "2 yıl 8 ay") otomatik hesaplanır.
+#
+# work       : orada yaptıklarım (madde madde)
+# highlights : içinde yer aldığım ürünler [{ name, description: { tr, en } }]
+# learned    : bana kazandırdıkları (kısa etiketler)
+# color      : clay | amber | sea | sky | plum | moss | rose | ink  (zaman çizelgesindeki işaret rengi)
+
+- id: lise
+  order: 1
+  kind: education
+  color: sea
+  organization: Şehit Öğretmen Fatma Nur Çelik MTAL
+  title:
+    tr: Bilişim Teknolojileri Alanı · Mezun
+    en: Information Technologies Program · Graduated
+  period: { start: 2021-09, end: 2025-06 }
+  summary:
+    tr: >-
+      Yazılıma ve teknolojiye ilgimin başladığı, bilişim alanında temel aldığım okul.
+      Lise yıllarım boyunca çalışma hayatının da içindeydim.
+    en: >-
+      The school where my interest in software began and where I got my foundation in IT.
+      I was also working throughout my high school years.
+
+- id: aidata
+  order: 2
+  kind: work
+  color: amber
+  organization: Aidata Bilişim
+  title:
+    tr: Teknik Servis
+    en: Technical Service
+  period: { start: 2021-06, end: 2024-01 }
+  summary:
+    tr: >-
+      Lise eğitimim devam ederken başladığım ilk işim. İş disiplinini, sorumluluk almayı ve okul
+      ile işi birlikte yürütmeyi burada öğrendim.
+    en: >-
+      My first job, which I started while still in high school. This is where I learned work
+      discipline, responsibility, and how to balance school with work.
+  work:
+    tr:
+      - Donanım ve yazılım sorunlarını tespit edip çözdüm; bilgisayar ve ağ sistemlerinin bakımını yaptım.
+      - İhale ürünlerinin üretim sürecinde, özellikle bilgisayar montajında ekiple birlikte görev aldım.
+      - Ürün kalitesi ve teslimat sürecinin hızı için proje ekibiyle koordineli çalıştım.
+    en:
+      - Diagnosed and fixed hardware and software issues; maintained computer and network systems.
+      - Worked with the team in the production of tender products, mainly computer assembly.
+      - Coordinated with the project team to improve product quality and speed up delivery.
+  learned:
+    tr: [İş disiplini, Ekip içinde üretim, Okul ile işi birlikte yürütmek]
+    en: [Work discipline, Producing as a team, Balancing school and work]
+
+- id: uplide
+  order: 3
+  kind: internship
+  color: sky
+  organization: Uplide Teknoloji
+  title:
+    tr: Yazılım Stajyeri
+    en: Software Intern
+  period: { start: 2024-05, end: 2024-10 }
+  summary:
+    tr: Mobil uygulamaların geliştirme sürecinin neredeyse tüm aşamalarında yer aldım.
+    en: I took part in almost every stage of developing mobile apps.
+  work:
+    tr:
+      - Backend entegrasyonu, arayüz geliştirme ve hata düzeltme görevleri üstlendim.
+      - Test süreçlerinde yer aldım, performans değerlendirmeleri yaptım ve geri bildirim raporları hazırladım.
+      - Geliştirme sırasında ortaya çıkan teknik sorunları tespit edip çözüm önerileri sundum.
+    en:
+      - Took on backend integration, UI development and bug fixing tasks.
+      - Took part in testing, ran performance evaluations and wrote feedback reports.
+      - Identified technical issues that came up during development and proposed solutions.
+  highlights:
+    - name: İşim Sağlık
+      description:
+        tr: İş arayanlarla işverenleri buluşturan; ilan, mesajlaşma ve görüntülü görüşme içeren uygulama
+        en: An app connecting job seekers and employers, with listings, messaging and video calls
+    - name: Social-Up
+      description:
+        tr: Saha ekiplerinin yaptıkları servis işini fotoğraflayıp yüklediği uygulama
+        en: An app where field teams photograph and upload the service work they’ve done
+
+- id: dijitalgen
+  order: 4
+  kind: internship
+  color: plum
+  organization: Dijital Gen Yazılım
+  title:
+    tr: Yazılım Stajyeri
+    en: Software Intern
+  period: { start: 2024-10, end: 2025-07 }
+  summary:
+    tr: Flutter ile mobil uygulama geliştirdiğim ve ekip içinde Git/GitHub ile çalıştığım staj.
+    en: An internship where I built mobile apps with Flutter and worked in a team using Git/GitHub.
+  work:
+    tr:
+      - Flutter ile mobil uygulama geliştirme ve REST API entegrasyonları
+      - Arayüz geliştirme ve iyileştirme
+      - Hata analizi, hata düzeltme, test ve bakım süreçleri
+      - Git/GitHub ile ekip çalışması
+    en:
+      - Mobile app development with Flutter and REST API integrations
+      - UI development and refinement
+      - Bug analysis, bug fixing, testing and maintenance
+      - Teamwork with Git/GitHub
+  highlights:
+    - name: GenSight
+      description:
+        tr: Kurumsal iş takip ve görev yönetimi uygulaması
+        en: Corporate work tracking and task management app
+    - name: ARBooks
+      description:
+        tr: Artırılmış gerçeklik destekli çocuk hikâye platformu
+        en: Augmented-reality-powered children’s story platform
+    - name: GenFollow
+      description:
+        tr: Ürün takip ve süreç yönetimi web paneli
+        en: Product tracking and process management web panel
+
+- id: iyiligi-kodlayanlar
+  order: 5
+  kind: volunteer
+  color: moss
+  organization: İyiliği Kodlayanlar
+  title:
+    tr: Flutter Eğitimi & Gönüllü Flutter Geliştirici
+    en: Flutter Training & Volunteer Flutter Developer
+  period:
+    start: 2025-01
+    end: 2026-01
+    length: { tr: 1 yıl, en: 1 year }
+  summary:
+    tr: >-
+      Avrupa Birliği destekli bir yıllık program. İlk altı ay öğrenci olarak yüz yüze Flutter
+      eğitimi aldım; sonraki altı ay gönüllü geliştirici olarak psikologlar ile danışanları
+      buluşturan bir mobil uygulamanın ekibinde çalıştım.
+    en: >-
+      A one-year EU-supported program. For the first six months I was a student in in-person
+      Flutter training; for the next six I worked as a volunteer developer on a mobile app
+      connecting psychologists with clients.
+  work:
+    tr:
+      - 'İlk 6 ay · öğrenci: Dart, Flutter, Firebase, REST API, Git/GitHub ve temiz kod üzerine uygulamalı eğitim'
+      - 'Son 6 ay · gönüllü geliştirici: sosyal fayda odaklı mobil uygulama ekibinde Flutter geliştirme'
+    en:
+      - 'First 6 months · student: hands-on training in Dart, Flutter, Firebase, REST APIs, Git/GitHub and clean code'
+      - 'Last 6 months · volunteer developer: Flutter development in a team building a social-impact app'
+  learned:
+    tr: [Ekip içinde çalışmak, Teknolojiyi toplumsal fayda için kullanmak]
+    en: [Working within a team, Using technology for social good]
+
+- id: petjoo
+  order: 6
+  kind: freelance
+  color: rose
+  organization: PetJoo
+  title:
+    tr: Freelance Flutter Geliştirici
+    en: Freelance Flutter Developer
+  period:
+    start: 2025-06
+    end: 2025-10
+    length: { tr: 4 ay, en: 4 months }
+  summary:
+    tr: >-
+      Stajlarımdan bağımsız, bir tanıdığımın kendi projesi. Evcil hayvan sahiplendirme
+      platformunun Flutter uygulamasına dört ay boyunca freelance destek verdim.
+    en: >-
+      Separate from my internships: an acquaintance’s own project. I supported the Flutter app of
+      this pet adoption platform as a freelancer for four months.
+  work:
+    tr:
+      - Mevcut uygulamada hata düzeltmeleri ve geliştirme çalışmaları yaptım.
+      - Arayüzü ve kullanıcı deneyimini iyileştiren düzenlemeler yaptım.
+      - Proje ekibiyle koordineli çalışarak kararlı sürümlerin hazırlanmasına katkı sağladım.
+    en:
+      - Fixed bugs and carried out improvements in the existing app.
+      - Made changes that improved the interface and user experience.
+      - Coordinated with the project team and contributed to preparing stable releases.
+
+- id: topkapi
+  order: 7
+  kind: education
+  color: clay
+  organization: İstanbul Topkapı Üniversitesi
+  title:
+    tr: Yönetim Bilişim Sistemleri · 1. sınıf
+    en: Management Information Systems · 1st year
+  period:
+    ongoing: true
+  summary:
+    tr: >-
+      Üniversite sınavı için verdiğim planlı aranın ardından eğitimime devam ediyorum.
+      Okurken mobil geliştirmede, özellikle iOS tarafında kendimi geliştiriyorum.
+    en: >-
+      After a planned break for the university entrance exam, I’m continuing my education,
+      and growing in mobile development, especially on iOS, while I study.
+
+- id: bugun
+  order: 8
+  kind: growth
+  color: ink
+  organization: iOS & Flutter
+  title:
+    tr: Mobil geliştirmede ilerliyorum
+    en: Growing in mobile development
+  period:
+    ongoing: true
+  summary:
+    tr: >-
+      Flutter’da staj ve proje deneyimimi sürdürürken iOS tarafında Swift ve SwiftUI
+      öğreniyor, kişisel projem Blokla ile pratiğimi artırıyorum.
+    en: >-
+      While building on my Flutter internship and project experience, I’m learning Swift and
+      SwiftUI on iOS and practising through my personal project Blokla.

@@ -1,0 +1,221 @@
+---
+import LanguageSwitch from './LanguageSwitch.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import { NAV_ITEMS } from '@/config/navigation';
+import { site } from '@/config/site';
+import { homePath, type Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/translate';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<header class="header" data-header>
+  <div class="header__inner container">
+    <a class="brand" href={homePath(locale)}>
+      <span class="brand__name">{site.name.toLocaleLowerCase(locale)}</span>
+    </a>
+
+    <button
+      class="menu-button"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-nav"
+      data-menu-button
+      data-label-open={t('a11y.openMenu')}
+      data-label-close={t('a11y.closeMenu')}
+    >
+      <span class="visually-hidden" data-menu-label>{t('a11y.openMenu')}</span>
+      <span class="menu-button__bars" aria-hidden="true"></span>
+    </button>
+
+    <div class="header__panel" id="site-nav" data-menu-panel>
+      <nav aria-label={t('a11y.mainNav')}>
+        <ul class="nav" role="list">
+          {
+            NAV_ITEMS.map((item) => (
+              <li>
+                <a class="nav__link" href={item.href} data-nav-link>
+                  {t(item.label)}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <div class="header__tools">
+        <LanguageSwitch {locale} />
+        <ThemeToggle {locale} />
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  import { initHeader } from '@/scripts/header';
+  initHeader();
+</script>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid transparent;
+    background: color-mix(in srgb, var(--paper) 82%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: border-color var(--duration-m);
+  }
+
+  .header[data-scrolled] {
+    border-bottom-color: var(--line);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m);
+    min-height: var(--header-height);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-style: italic;
+    text-decoration: none;
+  }
+
+  .header__panel {
+    display: flex;
+    align-items: center;
+    gap: var(--space-l);
+  }
+
+  .nav {
+    display: flex;
+    gap: var(--space-2xs);
+  }
+
+  .nav__link {
+    display: block;
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius-pill);
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .nav__link:hover {
+    color: var(--ink);
+    background: var(--surface-sunken);
+  }
+
+  .nav__link[aria-current='true'] {
+    color: var(--ink);
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+
+  .header__tools {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .menu-button {
+    display: none;
+  }
+
+  /* ---- Compact layout: collapsible panel ---- */
+  @media (max-width: 60rem) {
+    .menu-button {
+      display: grid;
+      place-items: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      background: var(--surface);
+    }
+
+    .menu-button__bars,
+    .menu-button__bars::before,
+    .menu-button__bars::after {
+      display: block;
+      width: 16px;
+      height: 1.5px;
+      background: currentColor;
+      transition: transform var(--duration-s) var(--ease-out), opacity var(--duration-s);
+    }
+
+    .menu-button__bars {
+      position: relative;
+    }
+
+    .menu-button__bars::before,
+    .menu-button__bars::after {
+      content: '';
+      position: absolute;
+      left: 0;
+    }
+
+    .menu-button__bars::before { top: -5px; }
+    .menu-button__bars::after { top: 5px; }
+
+    .menu-button[aria-expanded='true'] .menu-button__bars { background: transparent; }
+    .menu-button[aria-expanded='true'] .menu-button__bars::before { transform: translateY(5px) rotate(45deg); }
+    .menu-button[aria-expanded='true'] .menu-button__bars::after { transform: translateY(-5px) rotate(-45deg); }
+
+    .header__panel {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-m);
+      padding: var(--space-m) var(--gutter) var(--space-l);
+      border-bottom: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    :global(.js) .header__panel:not([data-open]) {
+      display: none;
+    }
+
+    .nav {
+      flex-direction: column;
+    }
+
+    .nav__link {
+      padding: 0.75rem 0.5rem;
+      font-size: var(--step-1);
+      border-radius: var(--radius-s);
+    }
+
+    /* Without JavaScript the panel is simply shown in the flow. */
+    :global(.no-js) .menu-button {
+      display: none;
+    }
+
+    :global(.no-js) .header__panel {
+      position: static;
+      border: 0;
+      padding-inline: 0;
+    }
+
+    :global(.no-js) .header__inner {
+      flex-wrap: wrap;
+    }
+  }
+</style>

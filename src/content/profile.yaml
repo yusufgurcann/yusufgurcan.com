@@ -1,0 +1,148 @@
+# Giriş ve "Hakkımda" metinleri.
+# Her metin { tr, en } olarak yazılır. Paragraflar liste elemanıdır.
+- id: main
+  role:
+    tr: Junior iOS & Flutter Developer
+    en: Junior iOS & Flutter Developer
+  headline:
+    tr: Junior’ım; ama verdiğiniz işi sahiplenir, test eder ve içiniz rahat teslim ederim.
+    en: I’m a junior, but I own the work you give me, test it, and hand it over so you don’t have to worry.
+  focus:
+    tr: Mobil uygulama geliştirme · Flutter ve iOS (Swift, SwiftUI)
+    en: Mobile app development · Flutter and iOS (Swift, SwiftUI)
+  languages:
+    tr: Türkçe · İngilizce
+    en: Turkish · English
+  intro:
+    tr: >-
+      2021’den beri çalışıyorum. Flutter ile stajlarda, freelance bir işte ve gönüllü bir ekipte
+      gerçek uygulamalar üzerinde çalıştım; şimdi iOS tarafında Swift ve SwiftUI öğreniyorum.
+      İstanbul Topkapı Üniversitesi YBS 1. sınıf öğrencisiyim ve ekibinizin yükünü hafifletmeye hazırım.
+    en: >-
+      I’ve been working since 2021. With Flutter, I’ve worked on real apps in internships, a
+      freelance job and a volunteer team; now I’m learning Swift and SwiftUI for iOS. I’m a
+      first-year MIS student at Istanbul Topkapı University, ready to take work off your team’s plate.
+  # CV'deki profil özeti. ATS'ler anahtar kelimeleri burada arar; sade ve somut tutun.
+  cv:
+    summary:
+      tr: >-
+        2021’den beri çalışma hayatında olan bir Junior iOS ve Flutter geliştiricisiyim. Uplide
+        Teknoloji ve Dijital Gen’deki yazılım stajlarımda Flutter ile mobil uygulama geliştirme,
+        REST API entegrasyonu, arayüz geliştirme, hata düzeltme ve test süreçlerinde yer aldım;
+        freelance ve gönüllü projelerde mevcut Flutter uygulamalarına katkı verdim. Şu anda Swift
+        ve SwiftUI ile iOS geliştirme öğreniyor, kişisel iOS projem Blokla üzerinde çalışıyorum.
+        İstanbul Topkapı Üniversitesi Yönetim Bilişim Sistemleri 1. sınıf öğrencisiyim.
+      en: >-
+        Junior iOS and Flutter developer, working since 2021. During software internships at
+        Uplide Teknoloji and Dijital Gen, worked on Flutter mobile app development, REST API
+        integration, UI development, bug fixing and testing; contributed to existing Flutter apps
+        in freelance and volunteer projects. Currently learning iOS development with Swift and
+        SwiftUI and building the personal iOS project Blokla. First-year Management Information
+        Systems student at Istanbul Topkapı University.
+  # Girişteki "Bir bakışta" kartı: işe alımcının ilk saniyede göreceği birkaç somut bilgi.
+  glance:
+    label: { tr: Bir bakışta, en: At a glance }
+    facts:
+      - value: { tr: '2021', en: '2021' }
+        label:
+          tr: Çalışma hayatına başladığım yıl
+          en: The year I started working
+      - value: { tr: '2', en: '2' }
+        label:
+          tr: Yazılım stajı · Uplide, Dijital Gen
+          en: Software internships · Uplide, Dijital Gen
+      - value: { tr: '6', en: '6' }
+        label:
+          tr: İş ve staj kapsamında yer aldığım ürün
+          en: Products I worked on in jobs and internships
+      - value: { tr: 1 yıl, en: 1 yr }
+        label:
+          tr: İyiliği Kodlayanlar · eğitim ve gönüllü geliştirme
+          en: İyiliği Kodlayanlar · training and volunteer work
+    now:
+      tr: 'Şu an: Swift ve SwiftUI ile iOS öğreniyorum'
+      en: 'Right now: learning iOS with Swift and SwiftUI'
+  pitch:
+    question:
+      tr: >-
+        Bu kadar deneyimli geliştiricinin ve yapay zekânın olduğu bir dönemde neden bir junior?
+        Neden Yusuf?
+      en: >-
+        With so many experienced developers around, and AI writing code, why hire a junior?
+        Why Yusuf?
+    answer:
+      tr: >-
+        Yapay zekâ kod yazabilir ama işi sahiplenmez. Ekibinizin hâlâ verilen işi anlayan, yapan,
+        test eden, takıldığında erkenden söyleyen ve sonunda içiniz rahat teslim eden birine
+        ihtiyacı var. Deneyimli bir geliştiricinin yerini almayı değil, onun haftasını yiyen
+        işleri üstlenmeyi teklif ediyorum: hata düzeltmeleri, arayüz geliştirmeleri, API
+        entegrasyonları, testler. Bu işleri daha önce gerçek projelerde yaptım.
+      en: >-
+        AI can write code, but it doesn’t own the work. Your team still needs someone who
+        understands the task, does it, tests it, speaks up early when stuck, and hands it over
+        so you can stop thinking about it. I’m not offering to replace a senior developer; I’m
+        offering to take the work that eats their week: bug fixes, UI work, API integrations,
+        tests. I’ve done this kind of work on real projects before.
+    offer:
+      tr: Ekibinizin haftasını yiyen işleri bana bırakın; siz daha önemli olana odaklanın.
+      en: Hand me the work that eats your team’s week, and focus on what matters more.
+  about:
+    tr:
+      - >-
+        Teknolojiye ve yazılıma ilgim lise yıllarında başladı. Mesleki ve Teknik Anadolu
+        Lisesi’nde Bilişim Teknolojileri alanında okurken çalışmaya da başladım. 2021’den 2024’e
+        kadar Aidata Bilişim’de teknik serviste çalıştım. Donanım ve yazılım sorunlarını çözmek,
+        bilgisayar montajında ekiple üretim yapmak bana iş disiplinini ve okul ile işi birlikte
+        yürütmeyi öğretti.
+      - >-
+        Sonra yazılıma yöneldim. Uplide Teknoloji’deki stajımda bir mobil uygulamanın neredeyse
+        tüm aşamalarında; backend entegrasyonu, arayüz, hata düzeltme ve testlerde yer aldım.
+        Dijital Gen’de Flutter ile mobil uygulama geliştirip REST API entegrasyonları yaptım ve
+        ekip içinde Git/GitHub ile çalıştım. Bunlardan ayrı olarak, bir tanıdığımın kendi projesi
+        olan PetJoo’ya dört ay boyunca freelance destek verip Flutter uygulamasında hata düzeltme
+        ve arayüz iyileştirmeleri yaptım.
+      - >-
+        Avrupa Birliği destekli İyiliği Kodlayanlar programında yüz yüze Flutter eğitimi aldım ve
+        psikologlar ile danışanları buluşturan bir uygulamanın ekibinde gönüllü geliştirici olarak
+        yer aldım. Teknolojiyi toplumsal fayda için kullanmak benim için bu projenin en değerli yanıydı.
+      - >-
+        Üniversite sınavı için planlı bir ara verdim; şimdi İstanbul Topkapı Üniversitesi’nde
+        Yönetim Bilişim Sistemleri okuyorum. Kariyerime özellikle iOS ve mobil geliştirmede devam
+        etmek istiyorum. Swift ve SwiftUI öğreniyor, kişisel projem Blokla ile pratik yapıyorum.
+        Benim için yazılım bir özelliği çalıştırmaktan ibaret değil; kullanıcının ihtiyacını
+        anlamak ve uygulamanın akıcı, anlaşılır ve güvenilir olmasını sağlamak da işin parçası.
+      - >-
+        Kariyerimin başındayım ve bunu saklamıyorum. Ama "junior" kelimesinin "sürekli
+        yardıma ihtiyaç duyan" anlamına gelmesini istemiyorum. Verilen işi anlamak, gerekirse
+        soru sormak, yapmak, test etmek ve teslim etmek; geri bildirim gelince de hızlıca
+        düzeltmek. Hedefim, ekibine zaman kazandıran ve gönül rahatlığıyla iş verilen bir
+        geliştirici olmak.
+    en:
+      - >-
+        My interest in technology and software started in high school. While studying Information
+        Technologies at a vocational high school, I also started working. From 2021 to 2024 I worked
+        in technical service at Aidata Bilişim. Fixing hardware and software issues and assembling
+        computers as part of a production team taught me work discipline and how to balance school
+        with work.
+      - >-
+        Then I moved into software. During my internship at Uplide Teknoloji I took part in almost
+        every stage of a mobile app: backend integration, UI, bug fixing and testing. At Dijital Gen
+        I built mobile apps with Flutter, worked on REST API integrations and collaborated with the
+        team through Git/GitHub. Separately, I spent four months supporting PetJoo, an
+        acquaintance’s own project, as a freelancer: fixing bugs and improving the interface of
+        its Flutter app.
+      - >-
+        In the EU-supported İyiliği Kodlayanlar program I received in-person Flutter training and
+        joined the team of an app connecting psychologists with clients as a volunteer developer.
+        Using technology for social good was the most meaningful part of that project for me.
+      - >-
+        I took a planned break for the university entrance exam and am now studying Management
+        Information Systems at Istanbul Topkapı University. I want to continue my career especially
+        in iOS and mobile development, so I’m learning Swift and SwiftUI and practising through my
+        personal project Blokla. To me, software isn’t only about making a feature work;
+        understanding what users need and making an app smooth, clear and reliable are part of the job too.
+      - >-
+        I’m at the start of my career and I don’t hide it. But I don’t want "junior" to mean
+        "constantly needs help". Understand the task, ask when needed, do it, test it, hand it
+        over, and fix things quickly when feedback comes in. My goal is to be a developer who
+        saves the team time and can be trusted with work without a second thought.

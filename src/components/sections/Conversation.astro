@@ -1,0 +1,219 @@
+---
+/**
+ * "Let's talk": a recruiter-style Q&A shown as a message thread.
+ *
+ * All messages are server-rendered and readable without JavaScript.
+ * With JS (and motion allowed), messages fade in one by one with a short
+ * typing indicator before each answer. Hidden messages use opacity only, so
+ * the layout never jumps and screen readers can read everything at once.
+ */
+import Section from '@/components/ui/Section.astro';
+import { SECTION } from '@/config/navigation';
+import { site } from '@/config/site';
+import type { ChatTurn, Profile } from '@/lib/content';
+import type { Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/translate';
+
+interface Props {
+  locale: Locale;
+  turns: readonly ChatTurn[];
+  profile: Profile;
+}
+
+const { locale, turns, profile } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<Section id={SECTION.chat} kicker={t('chat.kicker')} title={t('chat.title')} lead={t('chat.lead')}>
+  <div class="thread" data-chat>
+    <header class="thread__header">
+      <span class="thread__avatar" aria-hidden="true">{site.initials}</span>
+      <span>
+        <span class="thread__name">{site.name}</span>
+        <span class="thread__role caption">{profile.role}</span>
+      </span>
+    </header>
+
+    <ol class="thread__messages" role="list">
+      {
+        turns.map((turn) => (
+          <>
+            <li class="msg msg--them" data-chat-message>
+              <span class="visually-hidden">{t('chat.visitor')}:</span>
+              <p class="bubble">{turn.question}</p>
+            </li>
+            <li class="msg msg--me" data-chat-message data-chat-answer>
+              <span class="visually-hidden">{t('chat.me')}:</span>
+              <p class="bubble">{turn.answer}</p>
+              <span class="typing" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
+            </li>
+          </>
+        ))
+      }
+    </ol>
+
+    <footer class="thread__footer" data-chat-message>
+      <a class="reply" href={`#${SECTION.contact}`}>
+        {t('chat.end')} <span aria-hidden="true">→</span>
+      </a>
+    </footer>
+  </div>
+</Section>
+
+<script>
+  import { initChat } from '@/scripts/chat';
+  initChat();
+</script>
+
+<style>
+  .thread {
+    max-width: 44rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+
+  .thread__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    padding: var(--space-s) var(--space-m);
+    border-bottom: 1px solid var(--line);
+    line-height: 1.3;
+  }
+
+  .thread__avatar {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    background: var(--stage-sea);
+    color: #fff;
+    font-family: var(--font-display);
+    font-style: italic;
+  }
+
+  .thread__name {
+    display: block;
+    font-weight: 600;
+  }
+
+  .thread__role {
+    color: var(--muted);
+  }
+
+  .thread__messages {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-l) var(--space-m);
+  }
+
+  .msg {
+    position: relative;
+    display: flex;
+    max-width: min(82%, 34rem);
+  }
+
+  .msg--them {
+    align-self: flex-start;
+  }
+
+  .msg--me {
+    align-self: flex-end;
+    margin-bottom: var(--space-s);
+  }
+
+  .bubble {
+    padding: 0.6rem 0.95rem;
+    border-radius: 1.15rem;
+    line-height: 1.5;
+  }
+
+  .msg--them .bubble {
+    background: var(--bubble-them);
+    border-bottom-left-radius: 0.35rem;
+  }
+
+  .msg--me .bubble {
+    background: var(--bubble-me);
+    color: var(--bubble-me-ink);
+    border-bottom-right-radius: 0.35rem;
+  }
+
+  .typing {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: none;
+    gap: 4px;
+    padding: 0.8rem 0.95rem;
+    border-radius: 1.15rem;
+    border-bottom-right-radius: 0.35rem;
+    background: var(--bubble-them);
+  }
+
+  .typing span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+    animation: blink 1s infinite;
+  }
+
+  .typing span:nth-child(2) { animation-delay: 0.15s; }
+  .typing span:nth-child(3) { animation-delay: 0.3s; }
+
+  @keyframes blink {
+    0%, 60%, 100% { opacity: 0.3; }
+    30% { opacity: 1; }
+  }
+
+  .thread__footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 var(--space-m) var(--space-l);
+  }
+
+  .reply {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-pill);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .reply:hover {
+    border-color: var(--accent);
+  }
+
+  /* ---- Sequential reveal (set up by scripts/chat.ts) ---- */
+  [data-chat-message] {
+    transition:
+      opacity var(--duration-m) var(--ease-out),
+      transform var(--duration-m) var(--ease-out);
+  }
+
+  [data-state='hidden'],
+  [data-state='typing'] > .bubble {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  [data-state='typing'] .typing {
+    display: flex;
+  }
+
+  @media (max-width: 36rem) {
+    .msg {
+      max-width: 92%;
+    }
+  }
+</style>

@@ -1,0 +1,84 @@
+---
+import Section from '@/components/ui/Section.astro';
+import FeaturedProject from '@/components/projects/FeaturedProject.astro';
+import ProjectCard from '@/components/projects/ProjectCard.astro';
+import { SECTION } from '@/config/navigation';
+import type { Project, ProjectDisplay } from '@/lib/content';
+import type { Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/translate';
+
+interface Props {
+  locale: Locale;
+  projects: readonly Project[];
+}
+
+const { locale, projects } = Astro.props;
+const t = useTranslations(locale);
+const byDisplay = (display: ProjectDisplay) => projects.filter((project) => project.display === display);
+
+const featured = byDisplay('featured');
+const cards = byDisplay('card');
+const mentions = byDisplay('mention');
+---
+
+<Section id={SECTION.projects} kicker={t('projects.kicker')} title={t('projects.title')} lead={t('projects.lead')}>
+  <div class="projects">
+    {featured.map((project) => <FeaturedProject {locale} {project} />)}
+
+    {
+      cards.length > 0 && (
+        <ul class="projects__grid" role="list">
+          {cards.map((project) => (
+            <li>
+              <ProjectCard {locale} {project} />
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    {
+      mentions.length > 0 && (
+        <p class="projects__also">
+          <span class="projects__also-label caption">{t('projects.also')}</span>
+          {mentions.map((project) => (
+            <span class="projects__mention">
+              <strong>{project.name}</strong> <span class="caption">({project.stack.join(', ')})</span>
+            </span>
+          ))}
+        </p>
+      )
+    }
+  </div>
+</Section>
+
+<style>
+  .projects {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  .projects__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: var(--space-l);
+  }
+
+  .projects__also {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-xs) var(--space-m);
+    color: var(--ink-soft);
+  }
+
+  .projects__also-label {
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .projects__mention .caption {
+    color: var(--muted);
+  }
+</style>

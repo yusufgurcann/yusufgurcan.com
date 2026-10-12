@@ -1,0 +1,58 @@
+---
+import { LOCALES, LOCALE_NAMES, LOCALE_TAGS, homePath, type Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/translate';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<nav class="lang" aria-label={t('a11y.languageSwitch')}>
+  <ul role="list">
+    {
+      LOCALES.map((l) => (
+        <li>
+          <a
+            class="lang__link caption"
+            href={homePath(l)}
+            hreflang={LOCALE_TAGS[l]}
+            lang={LOCALE_TAGS[l]}
+            aria-current={l === locale ? 'page' : undefined}
+            data-keep-hash
+          >
+            <span aria-hidden="true">{l.toUpperCase()}</span>
+            <span class="visually-hidden">{LOCALE_NAMES[l]}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .lang ul {
+    display: flex;
+    padding: 3px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+  }
+
+  .lang__link {
+    display: grid;
+    place-items: center;
+    min-width: 2.3rem;
+    height: 2rem;
+    border-radius: var(--radius-pill);
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  .lang__link[aria-current='page'] {
+    background: var(--ink);
+    color: var(--paper);
+  }
+</style>

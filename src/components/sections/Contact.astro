@@ -1,0 +1,87 @@
+---
+import Section from '@/components/ui/Section.astro';
+import Pending from '@/components/ui/Pending.astro';
+import { SECTION } from '@/config/navigation';
+import { site } from '@/config/site';
+import { contactLinks } from '@/lib/contact';
+import type { Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/translate';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const showPending = import.meta.env.DEV;
+const links = contactLinks(site.contact, locale).filter((link) => link.href !== null || showPending);
+---
+
+<Section id={SECTION.contact} kicker={t('contact.kicker')} title={t('contact.title')} lead={t('contact.lead')}>
+  <div class="contact">
+    {
+      links.length > 0 && (
+        <ul class="channels" role="list">
+          {links.map((link) => (
+            <li class="channel">
+              <span class="channel__label caption">{t(link.label)}</span>
+              {link.href ? (
+                <a
+                  class="channel__value"
+                  href={link.href}
+                  {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  {...(link.key === 'cv' ? { download: '' } : {})}
+                >
+                  {link.display}
+                  {link.external && <span class="visually-hidden">{t('a11y.external')}</span>}
+                </a>
+              ) : (
+                <Pending {locale} />
+              )}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</Section>
+
+<style>
+  .contact {
+    display: grid;
+  }
+
+  .channels {
+    display: grid;
+    max-width: 40rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .channel {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: var(--space-m);
+    align-items: center;
+    padding-block: var(--space-m);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .channel__label {
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .channel__value {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 40rem) {
+    .channel {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xs);
+    }
+  }
+</style>

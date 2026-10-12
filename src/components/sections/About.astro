@@ -1,0 +1,109 @@
+---
+import Section from '@/components/ui/Section.astro';
+import { SECTION } from '@/config/navigation';
+import { site } from '@/config/site';
+import type { EducationEntry, Profile } from '@/lib/content';
+import type { Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/translate';
+
+interface Props {
+  locale: Locale;
+  profile: Profile;
+  /** Current school, shown in the facts card. */
+  currentEducation: EducationEntry | undefined;
+}
+
+const { locale, profile, currentEducation } = Astro.props;
+const t = useTranslations(locale);
+
+interface Fact {
+  label: string;
+  value: string;
+}
+
+const facts: Fact[] = [
+  { label: t('about.fact.location'), value: site.location },
+  ...(currentEducation
+    ? [{ label: t('about.fact.school'), value: `${currentEducation.program} · ${currentEducation.status}` }]
+    : []),
+  { label: t('about.fact.focus'), value: profile.focus },
+  { label: t('about.fact.languages'), value: profile.languages },
+];
+---
+
+<Section id={SECTION.about} kicker={t('about.kicker')} title={t('about.title')}>
+  <div class="about">
+    <div class="about__story">
+      {profile.about.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+    <aside class="about__facts" aria-label={t('about.facts')}>
+      <dl>
+        {
+          facts.map((fact) => (
+            <div class="fact">
+              <dt class="caption">{fact.label}</dt>
+              <dd>{fact.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </aside>
+  </div>
+</Section>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: minmax(0, var(--reading-width)) minmax(14rem, 18rem);
+    justify-content: space-between;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .about__story {
+    display: grid;
+    gap: var(--space-m);
+    color: var(--ink-soft);
+  }
+
+  .about__story p:first-child::first-line {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .about__facts {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-l));
+    padding: var(--space-m);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-m);
+    background: var(--surface);
+  }
+
+  .fact + .fact {
+    margin-top: var(--space-s);
+    padding-top: var(--space-s);
+    border-top: 1px dashed var(--line);
+  }
+
+  .fact dt {
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .fact dd {
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 52rem) {
+    .about {
+      grid-template-columns: 1fr;
+    }
+
+    .about__facts {
+      position: static;
+    }
+  }
+</style>

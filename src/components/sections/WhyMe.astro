@@ -1,0 +1,170 @@
+---
+/**
+ * "Why me?": answers the question every employer has about a junior,
+ * then backs each claim with a link to the experience that proves it.
+ */
+import Section from '@/components/ui/Section.astro';
+import LinkButton from '@/components/ui/LinkButton.astro';
+import { SECTION } from '@/config/navigation';
+import type { Profile, Reason } from '@/lib/content';
+import type { Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/translate';
+
+interface Props {
+  locale: Locale;
+  pitch: Profile['pitch'];
+  reasons: readonly Reason[];
+}
+
+const { locale, pitch, reasons } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<Section id={SECTION.why} kicker={t('why.kicker')} title={pitch.question} class="why">
+  <p class="why__answer">{pitch.answer}</p>
+
+  <h3 class="visually-hidden">{t('why.reasons')}</h3>
+  <ol class="reasons" role="list">
+    {
+      reasons.map((reason, index) => (
+        <li class="reason">
+          <span class="reason__index caption" aria-hidden="true">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <h4 class="reason__title">{reason.title}</h4>
+          <p class="reason__body">{reason.body}</p>
+          <p class="reason__evidence">
+            <span class="caption">{t('why.evidence')}</span>
+            <a href={reason.evidence.href}>
+              ↳ {reason.evidence.label}
+            </a>
+          </p>
+        </li>
+      ))
+    }
+  </ol>
+
+  <div class="offer">
+    <p class="offer__text">{pitch.offer}</p>
+    <LinkButton href={`#${SECTION.contact}`}>{t('why.cta')} <span aria-hidden="true">→</span></LinkButton>
+  </div>
+</Section>
+
+<style>
+  /* The question is the heading here, so give it a little more room. */
+  :global(.why .section__header) {
+    max-width: 48rem;
+  }
+
+  .why__answer {
+    max-width: 62ch;
+    margin-top: calc(-1 * var(--space-m));
+    color: var(--ink-soft);
+    font-size: var(--step-1);
+    line-height: 1.6;
+  }
+
+  .reasons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-m);
+    margin-top: var(--space-xl);
+  }
+
+  @media (min-width: 40rem) {
+    .reasons {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 68rem) {
+    .reasons {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .reason {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-l);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+  }
+
+  .reason__index {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .reason__title {
+    font-size: var(--step-1);
+    font-family: var(--font-display);
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .reason__body {
+    flex: 1;
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+    line-height: 1.6;
+  }
+
+  .reason__evidence {
+    display: grid;
+    gap: 2px;
+    margin-top: var(--space-xs);
+    padding-top: var(--space-s);
+    border-top: 1px dashed var(--line);
+    font-size: var(--step--1);
+  }
+
+  .reason__evidence .caption {
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .reason__evidence a {
+    display: inline-block;
+    padding-block: 0.35rem;
+    font-weight: 500;
+  }
+
+  .offer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m) var(--space-l);
+    margin-top: var(--space-l);
+    padding: var(--space-l);
+    border-radius: var(--radius-l);
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .offer__text {
+    max-width: 36ch;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-style: italic;
+    line-height: 1.25;
+  }
+
+  /* Inverted button on the dark offer bar. */
+  .offer :global(.button--solid) {
+    background: var(--paper);
+    border-color: var(--paper);
+    color: var(--ink);
+  }
+
+  .offer :global(.button--solid:hover) {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-contrast);
+  }
+</style>

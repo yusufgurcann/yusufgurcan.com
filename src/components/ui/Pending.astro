@@ -1,0 +1,41 @@
+---
+/**
+ * Marks content that hasn't been provided yet.
+ * Visible only during development (`npm run dev`); renders nothing in production,
+ * so missing details are never shown as fake or broken data on the live site.
+ */
+import type { Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/translate';
+
+interface Props {
+  locale: Locale;
+  /** What is missing, e.g. "GitHub". */
+  label?: string;
+}
+
+const { locale, label } = Astro.props;
+const t = useTranslations(locale);
+const show = import.meta.env.DEV;
+---
+
+{
+  show && (
+    <span class="pending caption" title="src/config/site.ts · src/content/*.yaml">
+      {label && <span>{label}:</span>}
+      {t('placeholder.pending')}
+    </span>
+  )
+}
+
+<style>
+  .pending {
+    display: inline-flex;
+    justify-self: start;
+    width: fit-content;
+    gap: 0.4em;
+    padding: 0.1em 0.6em;
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-s);
+    color: var(--muted);
+  }
+</style>

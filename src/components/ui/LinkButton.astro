@@ -1,0 +1,62 @@
+---
+/** A link styled as a button. External links open in a new tab with a hidden hint. */
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends Omit<HTMLAttributes<'a'>, 'class'> {
+  href: string;
+  variant?: 'solid' | 'ghost';
+  external?: boolean;
+  externalHint?: string;
+}
+
+const { href, variant = 'solid', external = false, externalHint, ...rest } = Astro.props;
+const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+<a href={href} class:list={['button', `button--${variant}`]} {...externalAttrs} {...rest}>
+  <slot />
+  {external && externalHint && <span class="visually-hidden">{externalHint}</span>}
+</a>
+
+<style>
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    min-height: 2.9rem;
+    padding: 0.65rem 1.2rem;
+    border: 1px solid var(--ink);
+    border-radius: var(--radius-pill);
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+      transform var(--duration-s) var(--ease-out),
+      background-color var(--duration-s),
+      color var(--duration-s);
+  }
+
+  .button:hover {
+    transform: translateY(-2px);
+  }
+
+  .button--solid {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .button--solid:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-contrast);
+  }
+
+  .button--ghost {
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .button--ghost:hover {
+    background: var(--surface);
+    color: var(--ink);
+  }
+</style>

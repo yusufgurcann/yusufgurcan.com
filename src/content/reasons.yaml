@@ -1,0 +1,65 @@
+# "Neden ben?" bölümündeki gerekçeler.
+# Her gerekçe somut bir deneyime dayanır ve ona bağlanır:
+#   stop    : journey.yaml içindeki bir durağın id'si (ör. uplide)
+#   project : projects.yaml içindeki bir projenin id'si (ör. blokla)
+# Yanlış bir id yazılırsa build hata verir.
+
+- id: ownership
+  order: 1
+  title:
+    tr: Verilen işi sahiplenirim
+    en: I own the work I’m given
+  body:
+    tr: >-
+      Bir görevi "yaptım" demek için değil, çalışır hâlde teslim etmek için alırım. Uplide’da
+      mobil uygulamaların neredeyse tüm aşamalarında yer aldım: backend entegrasyonu, arayüz,
+      hata düzeltme, test.
+    en: >-
+      I don’t take a task just to say "done"; I take it to hand it over working. At Uplide I
+      worked across almost every stage of mobile apps: backend integration, UI, bug fixing, testing.
+  stop: uplide
+
+- id: existing-code
+  order: 2
+  title:
+    tr: Var olan koda girip iş çıkarırım
+    en: I can step into an existing codebase
+  body:
+    tr: >-
+      Her iş sıfırdan başlamaz. Dijital Gen’deki stajımda üç farklı ürünün kodunda çalıştım:
+      hata analizi, hata düzeltme, arayüz iyileştirme ve API entegrasyonu.
+    en: >-
+      Not every job starts from scratch. During my internship at Dijital Gen I worked in the
+      codebases of three different products: bug analysis, bug fixing, UI improvements and API
+      integration.
+  stop: dijitalgen
+
+- id: testing
+  order: 3
+  title:
+    tr: Teslim etmeden önce test ederim
+    en: I test before I hand it over
+  body:
+    tr: >-
+      İşi size bıraktığımda kontrol etmeniz gereken şey az olsun isterim. Uplide’da test ve
+      performans değerlendirmesi yapıp geri bildirim raporları hazırladım; Blokla’da oyun
+      kurallarını testlerle doğruluyorum.
+    en: >-
+      When I hand work over, I want there to be little left for you to check. At Uplide I ran
+      tests and performance evaluations and wrote feedback reports; in Blokla I verify the game
+      rules with tests.
+  project: blokla
+
+- id: discipline
+  order: 4
+  title:
+    tr: Çalışma disiplinim lisede başladı
+    en: My work ethic started in high school
+  body:
+    tr: >-
+      2021’den beri çalışıyorum. Okulla işi birlikte yürüttüm, teknik serviste ve üretimde
+      ekiple çalıştım. Sorumluluk benim için yeni bir kavram değil.
+    en: >-
+      I’ve been working since 2021. I balanced school with work and worked with teams in
+      technical service and production. Responsibility isn’t new to me.
+  stop: aidata

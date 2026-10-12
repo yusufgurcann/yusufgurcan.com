@@ -1,0 +1,240 @@
+---
+/**
+ * A project presented as four labelled fields — purpose, role, technologies
+ * and status — so readers can compare projects at a glance.
+ */
+import Tag from '@/components/ui/Tag.astro';
+import Pending from '@/components/ui/Pending.astro';
+import type { Project } from '@/lib/content';
+import { projectAnchorId } from '@/config/navigation';
+import type { Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/translate';
+
+interface Props {
+  locale: Locale;
+  project: Project;
+}
+
+const { locale, project } = Astro.props;
+const t = useTranslations(locale);
+const headingId = projectAnchorId(project.id);
+---
+
+<article class="card" data-color={project.color} aria-labelledby={headingId}>
+  <header class="card__header">
+    {
+      project.icon ? (
+        <img class="card__icon" src={project.icon} alt="" width="48" height="48" loading="lazy" />
+      ) : (
+        <span class="card__mark" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </span>
+      )
+    }
+    <div>
+      <p class="card__context caption">{project.context}</p>
+      <h3 id={headingId} class="card__name">{project.name}</h3>
+      <p class="card__tagline">{project.tagline}</p>
+    </div>
+  </header>
+
+  <dl class="card__fields">
+    {
+      project.purpose && (
+        <div class="field">
+          <dt class="caption">{t('projects.purpose')}</dt>
+          <dd>{project.purpose}</dd>
+        </div>
+      )
+    }
+    {
+      project.role && (
+        <div class="field">
+          <dt class="caption">{t('projects.role')}</dt>
+          <dd>{project.role}</dd>
+        </div>
+      )
+    }
+    {
+      project.work.length > 0 && (
+        <div class="field">
+          <dt class="caption">{t('projects.work')}</dt>
+          <dd>
+            <ul class="card__focus" role="list">
+              {project.work.map((item) => (
+                <li>
+                  <span aria-hidden="true">↳</span> {item}
+                </li>
+              ))}
+            </ul>
+          </dd>
+        </div>
+      )
+    }
+    <div class="field">
+      <dt class="caption">{t('projects.stack')}</dt>
+      <dd>
+        <ul class="card__tags" role="list">
+          {project.stack.map((tech) => <li><Tag>{tech}</Tag></li>)}
+        </ul>
+      </dd>
+    </div>
+    <div class="field">
+      <dt class="caption">{t('projects.status')}</dt>
+      <dd class="card__status">{project.status ?? <Pending {locale} />}</dd>
+    </div>
+    {
+      project.focus.length > 0 && (
+        <div class="field">
+          <dt class="caption">{t('projects.focus')}</dt>
+          <dd>
+            <ul class="card__focus" role="list">
+              {project.focus.map((item) => (
+                <li>
+                  <span aria-hidden="true">↳</span> {item}
+                </li>
+              ))}
+            </ul>
+          </dd>
+        </div>
+      )
+    }
+    {
+      project.links.length > 0 && (
+        <div class="field">
+          <dt class="caption">{t('projects.links')}</dt>
+          <dd class="card__links">
+            {project.links.map((link) => (
+              <a href={link.url} target="_blank" rel="noopener noreferrer">
+                {link.label} <span aria-hidden="true">↗</span>
+                <span class="visually-hidden">{t('a11y.external')}</span>
+              </a>
+            ))}
+          </dd>
+        </div>
+      )
+    }
+  </dl>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
+    height: 100%;
+    padding: var(--space-l);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition: transform var(--duration-m) var(--ease-out), border-color var(--duration-m);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 4px;
+    background: var(--stage);
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--line-strong);
+  }
+
+  .card__header {
+    display: flex;
+    gap: var(--space-m);
+    align-items: center;
+  }
+
+  /* Small three-block mark tinted with the project colour. */
+  .card__mark {
+    display: grid;
+    grid-template-columns: repeat(2, 0.9rem);
+    grid-template-rows: repeat(2, 0.9rem);
+    gap: 3px;
+    flex: none;
+  }
+
+  .card__mark span {
+    border-radius: 3px;
+    background: var(--stage);
+    box-shadow: var(--shadow-piece);
+  }
+
+  .card__mark span:first-child {
+    grid-column: 2;
+  }
+
+  .card__mark span:nth-child(2) {
+    grid-row: 2;
+  }
+
+  .card__icon {
+    width: 3rem;
+    height: 3rem;
+    flex: none;
+    border-radius: 22.5%;
+  }
+
+  .card__context {
+    color: var(--muted);
+  }
+
+  .card__name {
+    font-size: var(--step-2);
+  }
+
+  .card__tagline {
+    color: var(--muted);
+  }
+
+  .card__fields {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .field dt {
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .field dd {
+    margin-top: var(--space-2xs);
+    color: var(--ink-soft);
+  }
+
+  .card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-top: var(--space-2xs);
+  }
+
+  .card__status {
+    font-weight: 500;
+  }
+
+  .card__focus {
+    display: grid;
+    gap: 2px;
+  }
+
+  .card__focus span {
+    color: var(--muted);
+  }
+
+  .card__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-m);
+  }
+</style>

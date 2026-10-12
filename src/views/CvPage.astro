@@ -1,0 +1,275 @@
+---
+/**
+ * Printable CV, generated from the same content as the site.
+ *
+ * Built for applicant tracking systems (ATS):
+ *  - one column, in reading order; no tables, icons, images or text in graphics
+ *  - standard section headings, real text, URLs written out in full
+ *  - experience newest-first, consistent "title — organisation · dates" lines
+ *
+ * `npm run cv` prints this page to PDF (tools/build-cv.mjs).
+ */
+import '@fontsource-variable/onest';
+import { site } from '@/config/site';
+import { getHomeContent } from '@/lib/content';
+import { prettyPhone, prettyUrl } from '@/lib/contact';
+import { LOCALE_TAGS, homePath, type Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/translate';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const { profile, journey, projects, skills, education } = await getHomeContent(locale);
+
+const EXPERIENCE_KINDS = new Set(['work', 'internship', 'freelance', 'volunteer']);
+const experience = journey
+  .filter((stop) => EXPERIENCE_KINDS.has(stop.kind))
+  .sort((a, b) => (b.startKey ?? '').localeCompare(a.startKey ?? ''));
+
+// Skip projects already listed as experience (same id as a journey stop) to avoid repeating them.
+const experienceIds = new Set(experience.map((stop) => stop.id));
+const cvProjects = projects.filter((project) => project.display !== 'mention' && !experienceIds.has(project.id));
+
+const { email, phone, github, linkedin } = site.contact;
+const website = Astro.site ? new URL(homePath(locale), Astro.site).href : null;
+/** Contact line items; links stay clickable in the PDF and readable as plain text by ATS. */
+interface ContactItem {
+  text: string;
+  href?: string;
+}
+const contact: ContactItem[] = [
+  { text: site.district },
+  ...(phone ? [{ text: prettyPhone(phone, locale), href: `tel:${phone}` }] : []),
+  ...(email ? [{ text: email, href: `mailto:${email}` }] : []),
+  ...(website ? [{ text: prettyUrl(website), href: website }] : []),
+  ...(linkedin ? [{ text: prettyUrl(linkedin), href: linkedin }] : []),
+  ...(github ? [{ text: prettyUrl(github), href: github }] : []),
+];
+---
+
+<!doctype html>
+<html lang={LOCALE_TAGS[locale]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{site.name} — {t('cv.title')}</title>
+  </head>
+  <body>
+    <main class="cv">
+      <header class="cv__header">
+        <h1>{site.name}</h1>
+        <p class="cv__role">{profile.role}</p>
+        <p class="cv__contact">
+          {
+            contact.map((item, index) => (
+              <>
+                {index > 0 && <span aria-hidden="true"> | </span>}
+                {item.href ? <a href={item.href}>{item.text}</a> : <span>{item.text}</span>}
+              </>
+            ))
+          }
+        </p>
+      </header>
+
+      <section>
+        <h2>{t('cv.profile')}</h2>
+        <p>{profile.cvSummary}</p>
+      </section>
+
+      <section>
+        <h2>{t('cv.experience')}</h2>
+        {
+          experience.map((stop) => (
+            <article class="entry">
+              <h3>
+                {stop.title} — {stop.organization}
+              </h3>
+              {stop.period.text && (
+                <p class="entry__meta">
+                  {stop.period.text}
+                  {stop.period.duration && ` (${stop.period.duration})`}
+                </p>
+              )}
+              <ul>
+                {(stop.work.length > 0 ? stop.work : [stop.summary]).map((item) => (
+                  <li>{item}</li>
+                ))}
+                {stop.highlights.length > 0 && (
+                  <li>
+                    {t('cv.products')}:{' '}
+                    {stop.highlights.map((h) => `${h.name} (${h.description})`).join('; ')}
+                  </li>
+                )}
+              </ul>
+            </article>
+          ))
+        }
+      </section>
+
+      <section>
+        <h2>{t('cv.projects')}</h2>
+        {
+          cvProjects.map((project) => (
+            <article class="entry">
+              <h3>
+                {project.name} — {project.context}
+              </h3>
+              <p class="entry__meta">{project.stack.join(', ')}</p>
+              <ul>
+                {project.purpose && <li>{project.purpose}</li>}
+                {project.work.map((item) => (
+                  <li>{item}</li>
+                ))}
+                {project.status && <li>{project.status}</li>}
+              </ul>
+            </article>
+          ))
+        }
+      </section>
+
+      <section>
+        <h2>{t('cv.education')}</h2>
+        {
+          education.map((entry) => (
+            <article class="entry">
+              <h3>
+                {entry.program} — {entry.school}
+              </h3>
+              <p class="entry__meta">
+                {entry.status}
+                {entry.period?.text && ` · ${entry.period.text}`}
+              </p>
+            </article>
+          ))
+        }
+      </section>
+
+      <section>
+        <h2>{t('cv.skills')}</h2>
+        <ul class="skills">
+          {
+            skills.map((group) => (
+              <li>
+                <strong>{group.title}:</strong> {group.items.map((item) => item.name).join(', ')}
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section>
+        <h2>{t('cv.languages')}</h2>
+        <p>{profile.languages}</p>
+      </section>
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  @page {
+    size: A4;
+    margin: 14mm 16mm;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  html {
+    background: #fff;
+    color: #1a1a1a;
+    font-family: 'Onest Variable', Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    line-height: 1.45;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .cv {
+    max-width: 180mm;
+    margin: 0 auto;
+    padding: 12mm 0;
+  }
+
+  @media print {
+    .cv {
+      padding: 0;
+    }
+  }
+
+  h1 {
+    font-size: 22pt;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .cv__role {
+    margin-top: 1mm;
+    color: #a8432a;
+    font-size: 12pt;
+    font-weight: 600;
+  }
+
+  .cv__contact {
+    margin-top: 2mm;
+    color: #444;
+    font-size: 9.5pt;
+  }
+
+  .cv__contact a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  section {
+    margin-top: 6mm;
+  }
+
+  h2 {
+    padding-bottom: 1mm;
+    border-bottom: 0.6pt solid #bbb;
+    font-size: 11pt;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  section > p {
+    margin-top: 2mm;
+  }
+
+  .entry {
+    margin-top: 3mm;
+    break-inside: avoid;
+  }
+
+  h3 {
+    font-size: 10.5pt;
+    font-weight: 600;
+  }
+
+  .entry__meta {
+    color: #555;
+    font-size: 9.5pt;
+  }
+
+  ul {
+    margin-top: 1mm;
+    padding-left: 4.5mm;
+  }
+
+  li + li {
+    margin-top: 0.6mm;
+  }
+
+  .skills {
+    margin-top: 2mm;
+  }
+</style>

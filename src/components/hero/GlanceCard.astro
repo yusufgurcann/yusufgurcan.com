@@ -1,0 +1,166 @@
+---
+/**
+ * Hero visual: an "at a glance" index card with a few hard facts.
+ * Styled like a paper card resting on another, in the site's editorial voice.
+ * Facts fade in one after another (JS on, motion allowed); otherwise shown at once.
+ */
+import type { Profile } from '@/lib/content';
+
+interface Props {
+  glance: Profile['glance'];
+}
+
+const { glance } = Astro.props;
+---
+
+<figure class="glance">
+  <div class="glance__under" aria-hidden="true"></div>
+
+  <div class="glance__card">
+    <figcaption class="glance__label caption">
+      <span class="glance__pulse" aria-hidden="true"></span>
+      {glance.label}
+    </figcaption>
+
+    <dl class="glance__facts">
+      {
+        glance.facts.map((fact, index) => (
+          <div class="fact" style={`--i:${index}`}>
+            <dt class="fact__value">{fact.value}</dt>
+            <dd class="fact__label">{fact.label}</dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <p class="glance__now">
+      <span aria-hidden="true">↳</span>
+      {glance.now}
+    </p>
+  </div>
+</figure>
+
+<style>
+  .glance {
+    position: relative;
+    width: min(100%, 26rem);
+    margin: 0;
+  }
+
+  /* A second sheet peeking out underneath, slightly turned. */
+  .glance__under {
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    background: var(--surface-sunken);
+    transform: rotate(3.5deg) translate(6px, 8px);
+  }
+
+  .glance__card {
+    position: relative;
+    padding: var(--space-l);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    background: var(--surface);
+    box-shadow: var(--shadow-card);
+    transform: rotate(-1.2deg);
+    transition: transform var(--duration-m) var(--ease-out);
+  }
+
+  .glance:hover .glance__card {
+    transform: rotate(0deg) translateY(-3px);
+  }
+
+  .glance__label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .glance__pulse {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .glance__facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: var(--space-m);
+  }
+
+  .fact {
+    padding: var(--space-m) var(--space-s) var(--space-m) 0;
+    border-top: 1px dashed var(--line);
+  }
+
+  .fact:nth-child(even) {
+    padding-left: var(--space-m);
+    border-left: 1px dashed var(--line);
+  }
+
+  .fact__value {
+    font-family: var(--font-display);
+    font-size: var(--step-4);
+    font-weight: 500;
+    font-variation-settings: 'SOFT' 60;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .fact:first-child .fact__value {
+    color: var(--accent);
+  }
+
+  .fact__label {
+    margin-top: var(--space-xs);
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+    line-height: 1.4;
+  }
+
+  .glance__now {
+    display: flex;
+    gap: var(--space-xs);
+    margin-top: var(--space-s);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--line);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-style: italic;
+  }
+
+  .glance__now span {
+    color: var(--muted);
+    font-style: normal;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .fact {
+      animation: rise 520ms var(--ease-out) both;
+      animation-delay: calc(250ms + var(--i) * 140ms);
+    }
+
+    .glance__pulse {
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
+  @keyframes pulse {
+    50% {
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 22%, transparent);
+    }
+  }
+</style>

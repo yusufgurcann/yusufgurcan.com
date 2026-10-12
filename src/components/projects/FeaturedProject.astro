@@ -1,0 +1,308 @@
+---
+/**
+ * Large showcase for the project currently in focus.
+ * Media: real screenshots when provided in projects.yaml, otherwise the
+ * project's illustrated preview (see PREVIEWS), otherwise nothing.
+ */
+import Tag from '@/components/ui/Tag.astro';
+import Pending from '@/components/ui/Pending.astro';
+import BloklaPreview from './previews/BloklaPreview.astro';
+import type { Project } from '@/lib/content';
+import { projectAnchorId } from '@/config/navigation';
+import type { Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/translate';
+
+interface Props {
+  locale: Locale;
+  project: Project;
+}
+
+/** Illustrated previews, keyed by project id. */
+const PREVIEWS: Record<string, typeof BloklaPreview> = {
+  blokla: BloklaPreview,
+};
+
+const { locale, project } = Astro.props;
+const t = useTranslations(locale);
+const headingId = projectAnchorId(project.id);
+const Preview = PREVIEWS[project.id];
+---
+
+<article class="featured" data-color={project.color} aria-labelledby={headingId}>
+  <div class="featured__text">
+    <p class="featured__eyebrow caption">
+      <span class="featured__pulse" aria-hidden="true"></span>
+      {t('projects.featured')} · {project.context}
+    </p>
+
+    <div class="featured__title">
+      {project.icon && <img class="featured__icon" src={project.icon} alt="" width="72" height="72" loading="lazy" />}
+      <div>
+        <h3 id={headingId} class="featured__name">{project.name}</h3>
+        <p class="featured__tagline">{project.tagline}</p>
+      </div>
+    </div>
+
+    {project.purpose && <p class="featured__purpose">{project.purpose}</p>}
+
+    <dl class="featured__fields">
+      {
+        project.role && (
+          <div class="field">
+            <dt class="caption">{t('projects.role')}</dt>
+            <dd>{project.role}</dd>
+          </div>
+        )
+      }
+      {
+        project.work.length > 0 && (
+          <div class="field">
+            <dt class="caption">{t('projects.work')}</dt>
+            <dd>
+              <ul class="arrow-list" role="list">
+                {project.work.map((item) => (
+                  <li>
+                    <span aria-hidden="true">↳</span> {item}
+                  </li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        )
+      }
+      {
+        project.focus.length > 0 && (
+          <div class="field">
+            <dt class="caption">{t('projects.focus')}</dt>
+            <dd>
+              <ul class="chips" role="list">
+                {project.focus.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        )
+      }
+      <div class="field">
+        <dt class="caption">{t('projects.stack')}</dt>
+        <dd>
+          <ul class="tags" role="list">
+            {project.stack.map((tech) => <li><Tag>{tech}</Tag></li>)}
+          </ul>
+        </dd>
+      </div>
+      <div class="field">
+        <dt class="caption">{t('projects.status')}</dt>
+        <dd class="featured__status">{project.status ?? <Pending {locale} />}</dd>
+      </div>
+      {
+        project.links.length > 0 && (
+          <div class="field">
+            <dt class="caption">{t('projects.links')}</dt>
+            <dd class="featured__links">
+              {project.links.map((link) => (
+                <a href={link.url} target="_blank" rel="noopener noreferrer">
+                  {link.label} <span aria-hidden="true">↗</span>
+                  <span class="visually-hidden">{t('a11y.external')}</span>
+                </a>
+              ))}
+            </dd>
+          </div>
+        )
+      }
+    </dl>
+  </div>
+
+  <div class="featured__media">
+    {
+      project.screenshots.length > 0 ? (
+        <ul class="shots" role="list">
+          {project.screenshots.map((shot) => (
+            <li>
+              <img src={shot.src} alt={shot.alt} loading="lazy" decoding="async" />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        Preview && (
+          <figure class="featured__preview">
+            <Preview />
+            <figcaption class="caption">{t('projects.previewNote')}</figcaption>
+          </figure>
+        )
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .featured {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: var(--space-xl);
+    align-items: center;
+    padding: clamp(1.5rem, 1rem + 2.5vw, 3rem);
+    border: 1px solid var(--line);
+    border-radius: calc(var(--radius-l) + 8px);
+    background:
+      radial-gradient(circle at 85% 30%, color-mix(in srgb, var(--stage) 14%, transparent), transparent 55%),
+      var(--surface);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+
+  .featured__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--muted);
+  }
+
+  .featured__pulse {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--stage);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .featured__pulse {
+      animation: pulse 2s ease-in-out infinite;
+    }
+  }
+
+  @keyframes pulse {
+    50% {
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--stage) 25%, transparent);
+    }
+  }
+
+  .featured__title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+    margin-top: var(--space-m);
+  }
+
+  .featured__icon {
+    width: 4.5rem;
+    height: 4.5rem;
+    flex: none;
+    border-radius: 22.5%;
+    box-shadow: 0 10px 24px -12px rgb(17 28 71 / 0.6);
+  }
+
+  .featured__name {
+    font-size: var(--step-4);
+    line-height: 1;
+  }
+
+  .featured__tagline {
+    margin-top: var(--space-2xs);
+    color: var(--ink-soft);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-style: italic;
+  }
+
+  .featured__purpose {
+    margin-top: var(--space-l);
+    max-width: 56ch;
+    color: var(--ink-soft);
+  }
+
+  .featured__fields {
+    display: grid;
+    gap: var(--space-m);
+    margin-top: var(--space-l);
+  }
+
+  .field dt {
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .field dd {
+    margin-top: var(--space-2xs);
+    color: var(--ink-soft);
+  }
+
+  .arrow-list {
+    display: grid;
+    gap: 2px;
+  }
+
+  .arrow-list span {
+    color: var(--muted);
+  }
+
+  .chips,
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .chips li {
+    padding: 0.2rem 0.7rem;
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--stage) 14%, transparent);
+    color: var(--ink);
+    font-size: var(--step--1);
+  }
+
+  .featured__status {
+    font-weight: 500;
+  }
+
+  .featured__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-m);
+  }
+
+  .featured__media {
+    display: grid;
+    justify-items: center;
+  }
+
+  .featured__preview {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-m);
+  }
+
+  .featured__preview figcaption {
+    color: var(--muted);
+  }
+
+  .shots {
+    display: flex;
+    gap: var(--space-m);
+    max-width: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: var(--space-xs);
+  }
+
+  .shots li {
+    flex: 0 0 min(15rem, 80%);
+    scroll-snap-align: center;
+  }
+
+  .shots img {
+    width: 100%;
+    height: auto;
+    border-radius: 1.6rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  @media (max-width: 56rem) {
+    .featured {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

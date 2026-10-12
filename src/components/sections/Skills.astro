@@ -1,0 +1,93 @@
+---
+import Section from '@/components/ui/Section.astro';
+import { SECTION } from '@/config/navigation';
+import type { SkillGroup } from '@/lib/content';
+import type { Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/translate';
+
+interface Props {
+  locale: Locale;
+  groups: readonly SkillGroup[];
+}
+
+const { locale, groups } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<Section id={SECTION.skills} kicker={t('skills.kicker')} title={t('skills.title')} lead={t('skills.lead')}>
+  <div class="skills">
+    {
+      groups.map((group) => (
+        <section class="group" aria-labelledby={`skills-${group.id}`}>
+          <h3 id={`skills-${group.id}`} class="group__title">
+            {group.title}
+          </h3>
+          <p class="group__description">{group.description}</p>
+          <dl class="group__items">
+            {group.items.map((item) => (
+              <div class="skill">
+                <dt class="skill__name">{item.name}</dt>
+                <dd class="skill__context">{item.context}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      ))
+    }
+  </div>
+</Section>
+
+<style>
+  .skills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    border-top: 1px solid var(--line);
+  }
+
+  .group {
+    padding: var(--space-l) var(--space-l) var(--space-l) 0;
+  }
+
+  .group + .group {
+    padding-left: var(--space-l);
+    border-left: 1px solid var(--line);
+  }
+
+  .group__title {
+    font-size: var(--step-1);
+    font-style: italic;
+  }
+
+  .group__description {
+    margin-top: var(--space-2xs);
+    color: var(--muted);
+    font-size: var(--step--1);
+  }
+
+  .group__items {
+    display: grid;
+    gap: var(--space-m);
+    margin-top: var(--space-l);
+  }
+
+  .skill__name {
+    font-weight: 600;
+  }
+
+  .skill__context {
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+  }
+
+  @media (max-width: 58rem) {
+    .group,
+    .group + .group {
+      padding-inline: 0;
+      border-left: 0;
+    }
+
+    .group + .group {
+      border-top: 1px dashed var(--line);
+    }
+  }
+</style>

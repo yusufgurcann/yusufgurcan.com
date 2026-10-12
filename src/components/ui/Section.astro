@@ -1,0 +1,68 @@
+---
+/**
+ * Standard page section: a caption "kicker", a serif title, an optional lead
+ * paragraph and the section body. Keeps rhythm consistent across the page.
+ */
+
+interface Props {
+  id: string;
+  kicker: string;
+  title: string;
+  lead?: string | undefined;
+  /** Wider header for sections with a two-column body. */
+  class?: string;
+}
+
+const { id, kicker, title, lead, class: className } = Astro.props;
+const headingId = `${id}-title`;
+---
+
+<section id={id} class:list={['section', className]} aria-labelledby={headingId}>
+  <div class="container">
+    <header class="section__header">
+      <p class="section__kicker caption">{kicker}</p>
+      <h2 id={headingId} class="section__title">{title}</h2>
+      {lead && <p class="section__lead">{lead}</p>}
+    </header>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    padding-block: var(--space-2xl) 0;
+    counter-increment: section;
+  }
+
+  .section__header {
+    max-width: var(--reading-width);
+    margin-bottom: var(--space-xl);
+  }
+
+  .section__kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* Sections are numbered automatically, in page order (see main's counter-reset). */
+  .section__kicker::before {
+    content: counter(section, decimal-leading-zero) ' ·';
+    color: var(--ink);
+  }
+
+  .section__title {
+    margin-top: var(--space-s);
+    font-size: var(--step-3);
+  }
+
+  .section__lead {
+    margin-top: var(--space-m);
+    color: var(--ink-soft);
+    font-size: var(--step-1);
+    line-height: 1.55;
+  }
+</style>

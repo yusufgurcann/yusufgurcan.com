@@ -1,0 +1,56 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import LinkButton from '@/components/ui/LinkButton.astro';
+import { getProfile } from '@/lib/content';
+import { DEFAULT_LOCALE, homePath } from '@/i18n/locales';
+
+const locale = DEFAULT_LOCALE;
+const profile = await getProfile(locale);
+---
+
+<BaseLayout {locale} jobTitle={profile.role} title="404 — Yusuf Gürcan" noindex>
+  <section class="not-found container">
+    <div class="not-found__board" aria-hidden="true">
+      <span></span><span></span><span class="gap"></span><span></span>
+    </div>
+    <h1>Bu parça yerine oturmadı.</h1>
+    <p lang="en-US">This piece didn’t fit. The page you’re looking for doesn’t exist.</p>
+    <LinkButton href={homePath(locale)}>Ana sayfaya dön · Back home</LinkButton>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-m);
+    padding-block: var(--space-2xl);
+  }
+
+  .not-found h1 {
+    font-size: var(--step-4);
+  }
+
+  .not-found p {
+    color: var(--ink-soft);
+  }
+
+  .not-found__board {
+    display: grid;
+    grid-template-columns: repeat(2, 2.5rem);
+    gap: 5px;
+  }
+
+  .not-found__board span {
+    height: 2.5rem;
+    border-radius: 7px;
+    background: var(--stage-clay);
+    box-shadow: var(--shadow-piece);
+  }
+
+  .not-found__board .gap {
+    background: transparent;
+    border: 2px dashed var(--line-strong);
+    box-shadow: none;
+  }
+</style>

@@ -1,0 +1,38 @@
+---
+/**
+ * The one-page portfolio, composed from sections. Locale-agnostic:
+ * each route under src/pages only decides which locale to render.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/sections/Hero.astro';
+import WhyMe from '@/components/sections/WhyMe.astro';
+import About from '@/components/sections/About.astro';
+import Conversation from '@/components/sections/Conversation.astro';
+import Journey from '@/components/sections/Journey.astro';
+import Projects from '@/components/sections/Projects.astro';
+import Skills from '@/components/sections/Skills.astro';
+import Education from '@/components/sections/Education.astro';
+import Contact from '@/components/sections/Contact.astro';
+import { getHomeContent } from '@/lib/content';
+import type { Locale } from '@/i18n/locales';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { profile, reasons, journey, projects, skills, education, conversation } = await getHomeContent(locale);
+const knowsAbout = [...new Set(skills.flatMap((group) => group.items.map((item) => item.name)))];
+---
+
+<BaseLayout {locale} jobTitle={profile.role} {knowsAbout}>
+  <Hero {locale} {profile} />
+  <WhyMe {locale} pitch={profile.pitch} {reasons} />
+  <About {locale} {profile} currentEducation={education.find((entry) => entry.current)} />
+  <Conversation {locale} {profile} turns={conversation} />
+  <Journey {locale} stops={journey} />
+  <Projects {locale} {projects} />
+  <Skills {locale} groups={skills} />
+  <Education {locale} entries={education} />
+  <Contact {locale} />
+</BaseLayout>

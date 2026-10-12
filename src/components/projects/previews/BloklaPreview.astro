@@ -1,0 +1,177 @@
+---
+/**
+ * Illustrated Blokla screen, drawn with HTML/CSS in the game's "Classic"
+ * theme (colours taken from GameTheme.classic in the iOS project).
+ * Purely decorative; used until real screenshots are added to projects.yaml.
+ *
+ * Board legend: '.' empty · '*' placement preview · r o y g c b p = palette.
+ */
+const BOARD = [
+  '........',
+  '........',
+  '...**...',
+  '...*....',
+  'c.....y.',
+  'cc..b.yy',
+  'rroobbgg',
+  'rroo.bgg',
+] as const;
+
+/** Pieces waiting in the tray below the board. */
+const TRAY = [
+  { color: 'o', cells: ['x.', 'x.', 'xx'] },
+  { color: 'p', cells: ['xxx'] },
+  { color: 'g', cells: ['xx', 'xx'] },
+] as const;
+
+const PALETTE: Record<string, string> = {
+  r: '#F2453D',
+  o: '#FF9420',
+  y: '#FFD02E',
+  g: '#4CD964',
+  c: '#2EC5F5',
+  b: '#3F6BF2',
+  p: '#B15CF2',
+};
+
+const boardCells = BOARD.flatMap((row) => [...row]);
+---
+
+<div class="blokla" aria-hidden="true">
+  <div class="blokla__top">
+    <span class="blokla__brand">BLOKLA<span class="blokla__bang">!</span></span>
+    <span class="blokla__score">1 240</span>
+  </div>
+
+  <div class="blokla__board">
+    {
+      boardCells.map((symbol) =>
+        symbol === '.' ? (
+          <span class="tile tile--empty" />
+        ) : symbol === '*' ? (
+          <span class="tile tile--ghost" />
+        ) : (
+          <span class="tile tile--block" style={`--paint:${PALETTE[symbol]}`} />
+        ),
+      )
+    }
+  </div>
+
+  <div class="blokla__tray">
+    {
+      TRAY.map((piece) => (
+        <span class="piece" style={`--cols:${piece.cells[0].length};--paint:${PALETTE[piece.color]}`}>
+          {piece.cells.flatMap((row) =>
+            [...row].map((c) => (c === 'x' ? <span class="tile tile--block" /> : <span />)),
+          )}
+        </span>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .blokla {
+    --board: #1a2459;
+    --empty: rgb(15 22 64 / 0.85);
+    --accent: #ffd23f;
+    display: grid;
+    gap: 1.1rem;
+    width: min(100%, 20rem);
+    padding: 1.2rem 1.1rem 1.4rem;
+    border-radius: 2rem;
+    background: linear-gradient(180deg, #2b3f8f, #1a2a66 55%, #111c47);
+    box-shadow:
+      0 0 0 6px color-mix(in srgb, var(--ink) 92%, transparent),
+      0 30px 60px -30px rgb(17 28 71 / 0.8);
+    font-family: ui-rounded, 'SF Pro Rounded', system-ui, sans-serif;
+  }
+
+  .blokla__top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .blokla__brand {
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    background: linear-gradient(#fff, #bfd3ff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 3px 4px rgb(0 0 0 / 0.4));
+  }
+
+  .blokla__bang {
+    display: inline-block;
+    background: linear-gradient(#ffe66d, #ff8a3d);
+    background-clip: text;
+    -webkit-background-clip: text;
+    transform: rotate(12deg);
+  }
+
+  .blokla__score {
+    color: var(--accent);
+    font-size: 1.15rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .blokla__board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 3px;
+    padding: 6px;
+    border-radius: 14px;
+    background: var(--board);
+  }
+
+  .tile {
+    aspect-ratio: 1;
+    border-radius: 5px;
+  }
+
+  .tile--empty {
+    background: var(--empty);
+  }
+
+  /* "Bevel" block style: light top edge, darker bottom edge. */
+  .tile--block {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--paint) 80%, #fff), var(--paint) 45%);
+    box-shadow:
+      inset 0 -3px 0 color-mix(in srgb, var(--paint) 60%, #000),
+      inset 0 2px 0 rgb(255 255 255 / 0.35);
+  }
+
+  .tile--ghost {
+    background: var(--empty);
+    box-shadow: inset 0 0 0 2px rgb(255 255 255 / 0.55);
+  }
+
+  .blokla__tray {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 4.2rem;
+  }
+
+  .piece {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), 1.05rem);
+    gap: 2px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .tile--ghost {
+      animation: ghost-pulse 1.6s ease-in-out infinite;
+    }
+  }
+
+  @keyframes ghost-pulse {
+    50% {
+      box-shadow: inset 0 0 0 2px rgb(255 255 255 / 0.2);
+    }
+  }
+</style>

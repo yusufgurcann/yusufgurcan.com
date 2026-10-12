@@ -1,0 +1,88 @@
+---
+import '@fontsource-variable/onest';
+import '@fontsource-variable/fraunces/soft.css';
+import '@fontsource-variable/fraunces/soft-italic.css';
+import '@fontsource-variable/jetbrains-mono';
+import '@/styles/tokens.css';
+import '@/styles/base.css';
+
+import Seo from '@/components/seo/Seo.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import { LOCALE_TAGS, type Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/translate';
+
+interface Props {
+  locale: Locale;
+  title?: string;
+  description?: string;
+  jobTitle: string;
+  knowsAbout?: readonly string[];
+  noindex?: boolean;
+}
+
+const { locale, jobTitle, knowsAbout = [], noindex = false } = Astro.props;
+const t = useTranslations(locale);
+const title = Astro.props.title ?? t('meta.title');
+const description = Astro.props.description ?? t('meta.description');
+---
+
+<!doctype html>
+<html lang={LOCALE_TAGS[locale]} class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#131311" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <Seo {locale} {title} {description} {jobTitle} {knowsAbout} {noindex} />
+    <!-- Runs before first paint: applies the stored or system theme without a flash. -->
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        root.classList.replace('no-js', 'js');
+        let stored = null;
+        try {
+          stored = localStorage.getItem('theme');
+        } catch {}
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        root.dataset.theme = stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t('a11y.skip')}</a>
+    <Header {locale} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer {locale} />
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: fixed;
+    top: var(--space-s);
+    left: var(--space-s);
+    z-index: 100;
+    padding: var(--space-xs) var(--space-m);
+    border-radius: var(--radius-pill);
+    background: var(--ink);
+    color: var(--paper);
+    transform: translateY(-200%);
+    transition: transform var(--duration-s) var(--ease-out);
+  }
+
+  .skip-link:focus {
+    transform: none;
+  }
+
+  main {
+    counter-reset: section;
+  }
+
+  main:focus {
+    outline: none;
+  }
+</style>
