@@ -35,30 +35,34 @@
         and testing. Took part in freelance and volunteer projects. My iOS game Blokla, built
         independently with Swift and SwiftUI, is currently in App Store review. Management
         Information Systems student at Istanbul Topkapı University.
-  # Girişteki "Bir bakışta" kartı: işe alımcının ilk saniyede göreceği birkaç somut bilgi.
+  # Girişteki "Bir bakışta" kartı: işe alımcının ilk saniyede göreceği başlıklar.
   glance:
     label: { tr: Bir bakışta, en: At a glance }
-    facts:
-      # 8 = Uplide 2 + Dijital Gen 3 + PetJoo + İyiliği Kodlayanlar + Blokla
-      - value: { tr: '8', en: '8' }
-        label:
-          tr: Yer aldığım proje
-          en: Projects I’ve worked on
-      - value: { tr: '2', en: '2' }
-        label:
-          tr: Yazılım stajı · Uplide, Dijital Gen
-          en: Software internships · Uplide, Dijital Gen
-      - value: { tr: '1', en: '1' }
-        label:
-          tr: Freelance proje · PetJoo
-          en: Freelance project · PetJoo
-      - value: { tr: '1', en: '1' }
-        label:
-          tr: App Store’a gönderdiğim iOS uygulaması · Blokla
-          en: iOS app submitted to the App Store · Blokla
-    now:
-      tr: 'Şu an: Swift ve SwiftUI ile Blokla’yı geliştiriyorum'
-      en: 'Right now: building Blokla with Swift and SwiftUI'
+    items:
+      - title: { tr: Yazılım deneyimi, en: Software experience }
+        description:
+          tr: Uplide Software ve Dijital Gen’de staj deneyimi, mobil uygulama geliştirme ve ekip çalışması
+          en: Internships at Uplide Software and Dijital Gen, mobile app development and teamwork
+      - title: { tr: Freelance ve gönüllü projeler, en: Freelance and volunteer projects }
+        description:
+          tr: >-
+            PetJoo’da freelance geliştirme deneyimi, İyiliği Kodlayanlar kapsamında sosyal fayda
+            odaklı mobil uygulama geliştirme ve kişisel projeler
+          en: >-
+            Freelance development at PetJoo, social-impact mobile app development with İyiliği
+            Kodlayanlar, and personal projects
+      - title: { tr: Kişisel ürün, en: Personal product }
+        description:
+          tr: Blokla adlı iOS oyununun bağımsız geliştirilmesi ve App Store yayın süreci
+          en: Independent development of the iOS game Blokla and its App Store release process
+      - title: { tr: Teknik yetkinlikler, en: Technical skills }
+        description:
+          tr: >-
+            Flutter ve Dart ile mobil uygulama geliştirme deneyimi, Swift ve SwiftUI ile native iOS
+            geliştirme
+          en: >-
+            Mobile app development experience with Flutter and Dart, native iOS development with
+            Swift and SwiftUI
   pitch:
     question:
       tr: Yapay zekânın kod yazdığı bir dönemde neden Yusuf?

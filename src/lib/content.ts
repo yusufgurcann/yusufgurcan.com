@@ -25,8 +25,7 @@ export interface Profile {
   readonly cvSummary: string;
   readonly glance: {
     readonly label: string;
-    readonly facts: readonly { readonly value: string; readonly label: string }[];
-    readonly now: string;
+    readonly items: readonly { readonly title: string; readonly description: string }[];
   };
 }
 
@@ -114,8 +113,10 @@ export async function getProfile(locale: Locale): Promise<Profile> {
     cvSummary: pick(data.cv.summary, locale),
     glance: {
       label: pick(data.glance.label, locale),
-      facts: data.glance.facts.map((fact) => ({ value: pick(fact.value, locale), label: pick(fact.label, locale) })),
-      now: pick(data.glance.now, locale),
+      items: data.glance.items.map((item) => ({
+        title: pick(item.title, locale),
+        description: pick(item.description, locale),
+      })),
     },
     pitch: {
       question: pick(data.pitch.question, locale),

@@ -45,11 +45,10 @@ const profile = defineCollection({
     intro: localized,
     /** Printable CV: a keyword-rich summary for applicant tracking systems. */
     cv: z.object({ summary: localized }),
-    /** Hero "at a glance" card: a few hard facts a recruiter can take in at once. */
+    /** Hero "at a glance" card: a few headings a recruiter can take in at once. */
     glance: z.object({
       label: localized,
-      facts: z.array(z.object({ value: localized, label: localized })).min(2).max(4),
-      now: localized,
+      items: z.array(z.object({ title: localized, description: localized })).min(2).max(5),
     }),
     /** The "why me?" section: the hard question, a straight answer and an offer. */
     pitch: z.object({ question: localized, answer: localized, offer: localized }),

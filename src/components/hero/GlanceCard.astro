@@ -1,8 +1,8 @@
 ---
 /**
- * Hero visual: an "at a glance" index card with a few hard facts.
- * Styled like a paper card resting on another, in the site's editorial voice.
- * Facts fade in one after another (JS on, motion allowed); otherwise shown at once.
+ * Hero visual: an "at a glance" index card — a few headings with one-line
+ * descriptions, styled like a paper card resting on another.
+ * Items fade in one after another (JS on, motion allowed); otherwise shown at once.
  */
 import type { Profile } from '@/lib/content';
 
@@ -22,21 +22,16 @@ const { glance } = Astro.props;
       {glance.label}
     </figcaption>
 
-    <dl class="glance__facts">
+    <dl class="glance__items">
       {
-        glance.facts.map((fact, index) => (
-          <div class="fact" style={`--i:${index}`}>
-            <dt class="fact__value">{fact.value}</dt>
-            <dd class="fact__label">{fact.label}</dd>
+        glance.items.map((item, index) => (
+          <div class="item" style={`--i:${index}`}>
+            <dt class="item__title">{item.title}</dt>
+            <dd class="item__description">{item.description}</dd>
           </div>
         ))
       }
     </dl>
-
-    <p class="glance__now">
-      <span aria-hidden="true">↳</span>
-      {glance.now}
-    </p>
   </div>
 </figure>
 
@@ -88,60 +83,41 @@ const { glance } = Astro.props;
     background: var(--accent);
   }
 
-  .glance__facts {
+  .glance__items {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-top: var(--space-m);
+    margin-top: var(--space-s);
   }
 
-  .fact {
-    padding: var(--space-m) var(--space-s) var(--space-m) 0;
+  .item {
+    padding-block: var(--space-m);
     border-top: 1px dashed var(--line);
   }
 
-  .fact:nth-child(even) {
-    padding-left: var(--space-m);
-    border-left: 1px dashed var(--line);
+  .item:last-child {
+    padding-bottom: 0;
   }
 
-  .fact__value {
+  .item__title {
     font-family: var(--font-display);
-    font-size: var(--step-4);
+    font-size: var(--step-1);
     font-weight: 500;
     font-variation-settings: 'SOFT' 60;
-    line-height: 1;
-    letter-spacing: -0.02em;
+    line-height: 1.2;
   }
 
-  .fact:first-child .fact__value {
+  .item:first-child .item__title {
     color: var(--accent);
   }
 
-  .fact__label {
-    margin-top: var(--space-xs);
+  .item__description {
+    margin-top: var(--space-2xs);
     color: var(--ink-soft);
     font-size: var(--step--1);
-    line-height: 1.4;
-  }
-
-  .glance__now {
-    display: flex;
-    gap: var(--space-xs);
-    margin-top: var(--space-s);
-    padding-top: var(--space-m);
-    border-top: 1px solid var(--line);
-    font-family: var(--font-display);
-    font-size: var(--step-1);
-    font-style: italic;
-  }
-
-  .glance__now span {
-    color: var(--muted);
-    font-style: normal;
+    line-height: 1.5;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    :global(.js) .fact {
+    :global(.js) .item {
       animation: rise 520ms var(--ease-out) both;
       animation-delay: calc(250ms + var(--i) * 140ms);
     }
