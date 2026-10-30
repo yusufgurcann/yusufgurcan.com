@@ -29,24 +29,24 @@
 - id: ios
   order: 2
   title:
-    tr: Öğreniyorum, proje geliştiriyorum
-    en: Learning and building projects
+    tr: iOS tarafında
+    en: On iOS
   description:
-    tr: 'Kariyerimde ilerlemek istediğim yön: iOS.'
-    en: 'The direction I want to grow my career in: iOS.'
+    tr: Şu an en çok zaman ayırdığım ve ilerlemek istediğim alan.
+    en: Where I spend most of my time now, and where I want to grow.
   items:
     - name: Swift
       context:
-        tr: Öğrenme aşamasında · Blokla ile pratik
-        en: Learning · practising through Blokla
+        tr: Blokla’nın oyun çekirdeği ve uygulaması
+        en: Blokla’s game core and app
     - name: SwiftUI
       context:
-        tr: Öğrenme aşamasında · Blokla’nın arayüzü
-        en: Learning · Blokla’s interface
+        tr: Blokla’nın arayüzü ve animasyonları
+        en: Blokla’s interface and animations
     - name: Objective-C
       context:
-        tr: iOS öğrenme sürecimde tanıştığım dil
-        en: Met along the way while learning iOS
+        tr: iOS ekosisteminde tanıştığım dil
+        en: Picked up along the way in the iOS ecosystem
 
 - id: tools
   order: 3

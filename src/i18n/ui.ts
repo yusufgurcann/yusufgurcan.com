@@ -8,9 +8,9 @@ import type { Locale } from './locales';
  * locale must provide exactly the same keys (enforced by the type below).
  */
 const tr = {
-  'meta.title': 'Yusuf Gürcan — Junior iOS & Flutter Developer',
+  'meta.title': 'Yusuf Gürcan — iOS & Flutter Developer',
   'meta.description':
-    'Yusuf Gürcan: 2021’den beri çalışan, Flutter ile stajlarda ve freelance işlerde gerçek uygulamalar üzerinde çalışmış, iOS tarafında Swift ve SwiftUI öğrenen Junior iOS & Flutter geliştirici.',
+    'Yusuf Gürcan: iOS ve Flutter geliştirici. Flutter ile stajlarda, freelance ve gönüllü projelerde mobil uygulamalar geliştirdi; iOS’ta Swift ve SwiftUI ile kendi oyunu Blokla’yı geliştiriyor.',
 
   'a11y.skip': 'İçeriğe geç',
   'a11y.mainNav': 'Ana menü',
@@ -39,7 +39,7 @@ const tr = {
   'why.evidence': 'Kanıtı',
   'why.cta': 'Bir iş verin, görün',
   'about.kicker': 'Hakkımda',
-  'about.title': 'Adım adım kurduğum bir yol.',
+  'about.title': 'Kısaca ben.',
   'about.facts': 'Kısaca',
   'about.fact.location': 'Konum',
   'about.fact.school': 'Okul',
@@ -93,9 +93,8 @@ const tr = {
   'contact.kicker': 'İletişim',
   'contact.title': 'Sıradaki görev sizinki olsun.',
   'contact.lead':
-    'Ekibinizde, haftanızı yiyen işleri üstlenecek ve verdiğiniz işi gönül rahatlığıyla teslim edecek bir junior arıyorsanız yazın. İş, staj ve proje iş birliklerine açığım.',
+    'Ekibinizde, haftanızı yiyen işleri üstlenecek ve verdiğiniz işi gönül rahatlığıyla teslim edecek bir geliştirici arıyorsanız yazın. İş, staj ve proje iş birliklerine açığım.',
   'contact.email': 'E-posta',
-  'contact.phone': 'Telefon',
   'contact.github': 'GitHub',
   'contact.linkedin': 'LinkedIn',
   'contact.cv': 'CV (PDF)',
@@ -118,9 +117,9 @@ export type UiKey = keyof typeof tr;
 type Dictionary = Record<UiKey, string>;
 
 const en: Dictionary = {
-  'meta.title': 'Yusuf Gürcan — Junior iOS & Flutter Developer',
+  'meta.title': 'Yusuf Gürcan — iOS & Flutter Developer',
   'meta.description':
-    'Yusuf Gürcan: a junior iOS & Flutter developer, working since 2021, with hands-on Flutter experience from internships and freelance work, now learning Swift and SwiftUI.',
+    'Yusuf Gürcan: iOS and Flutter developer. Built mobile apps with Flutter in internships, freelance and volunteer projects; now building his own iOS game, Blokla, with Swift and SwiftUI.',
 
   'a11y.skip': 'Skip to content',
   'a11y.mainNav': 'Main navigation',
@@ -149,7 +148,7 @@ const en: Dictionary = {
   'why.evidence': 'Proof',
   'why.cta': 'Give me a task and see',
   'about.kicker': 'About',
-  'about.title': 'A path I’ve been building step by step.',
+  'about.title': 'In short.',
   'about.facts': 'At a glance',
   'about.fact.location': 'Based in',
   'about.fact.school': 'Studying',
@@ -203,9 +202,8 @@ const en: Dictionary = {
   'contact.kicker': 'Contact',
   'contact.title': 'Let the next task be yours.',
   'contact.lead':
-    'If your team needs a junior who takes on the work that eats your week and hands it over without you having to worry, get in touch. I’m open to jobs, internships and project collaborations.',
+    'If your team needs a developer who takes on the work that eats your week and hands it over without you having to worry, get in touch. I’m open to jobs, internships and project collaborations.',
   'contact.email': 'Email',
-  'contact.phone': 'Phone',
   'contact.github': 'GitHub',
   'contact.linkedin': 'LinkedIn',
   'contact.cv': 'CV (PDF)',

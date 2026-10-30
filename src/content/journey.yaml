@@ -212,14 +212,14 @@
   color: ink
   organization: iOS & Flutter
   title:
-    tr: Mobil geliştirmede ilerliyorum
-    en: Growing in mobile development
+    tr: iOS’ta Blokla’yı geliştiriyorum
+    en: Building Blokla on iOS
   period:
     ongoing: true
   summary:
     tr: >-
-      Flutter’da staj ve proje deneyimimi sürdürürken iOS tarafında Swift ve SwiftUI
-      öğreniyor, kişisel projem Blokla ile pratiğimi artırıyorum.
+      Flutter’daki staj ve proje deneyimimin üzerine, iOS tarafında Swift ve SwiftUI ile
+      kendi oyunum Blokla’yı geliştiriyorum.
     en: >-
-      While building on my Flutter internship and project experience, I’m learning Swift and
-      SwiftUI on iOS and practising through my personal project Blokla.
+      Building on my Flutter internship and project experience, I’m developing my own game,
+      Blokla, on iOS with Swift and SwiftUI.

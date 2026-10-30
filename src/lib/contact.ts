@@ -30,11 +30,11 @@ export function prettyPhone(phone: string, locale: Locale): string {
 
 /** Normalises the configured channels into a uniform, render-ready list. */
 export function contactLinks(channels: ContactChannels, locale: Locale): ContactLink[] {
-  const { email, phone, github, linkedin } = channels;
+  // The phone number is intentionally left out: it appears on the CV only.
+  const { email, github, linkedin } = channels;
   const cv = channels.cv?.[locale] ?? null;
   return [
     { key: 'email', label: 'contact.email', href: email && `mailto:${email}`, display: email, external: false },
-    { key: 'phone', label: 'contact.phone', href: phone && `tel:${phone}`, display: phone && prettyPhone(phone, locale), external: false },
     { key: 'github', label: 'contact.github', href: github, display: github && prettyUrl(github), external: true },
     { key: 'linkedin', label: 'contact.linkedin', href: linkedin, display: linkedin && prettyUrl(linkedin), external: true },
     { key: 'cv', label: 'contact.cv', href: cv, display: cv && 'PDF ↓', external: false },

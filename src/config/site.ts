@@ -11,7 +11,7 @@ import type { Locale } from '@/i18n/locales';
 export interface ContactChannels {
   /** e.g. "ad@ornek.com" */
   readonly email: string | null;
-  /** International format, digits only after "+", e.g. "+905551112233" */
+  /** International format, e.g. "+905551112233". Printed on the CV only, never on the website. */
   readonly phone: string | null;
   /** Full profile URL, e.g. "https://github.com/kullanici" */
   readonly github: string | null;
