@@ -21,7 +21,6 @@ const tr = {
   'a11y.external': '(yeni sekmede açılır)',
 
   'nav.why': 'Neden ben?',
-  'nav.about': 'Hakkımda',
   'nav.chat': 'Tanışalım',
   'nav.journey': 'Yol',
   'nav.projects': 'Projeler',
@@ -30,7 +29,7 @@ const tr = {
 
   'hero.eyebrow': 'Merhaba, ben',
   'hero.cta.secondary': 'Benimle iletişime geç',
-  'hero.cta.why': 'Neden ben?',
+  'hero.cta.projects': 'Projelerimi gör',
   'hero.cta.cv': 'CV’yi indir',
   'hero.available': 'İş ve staj fırsatlarına açığım',
 
@@ -38,13 +37,6 @@ const tr = {
   'why.reasons': 'Bunu neye dayanarak söylüyorum',
   'why.evidence': 'Kanıtı',
   'why.cta': 'Bir iş verin, görün',
-  'about.kicker': 'Hakkımda',
-  'about.title': 'Kısaca ben.',
-  'about.facts': 'Kısaca',
-  'about.fact.location': 'Konum',
-  'about.fact.school': 'Okul',
-  'about.fact.focus': 'Odak',
-  'about.fact.languages': 'Diller',
 
   'chat.kicker': 'Tanışalım',
   'chat.title': 'Bir mülakattan önce, kısa bir sohbet.',
@@ -71,7 +63,7 @@ const tr = {
 
   'projects.kicker': 'Projeler',
   'projects.title': 'Üzerinde çalıştığım işler',
-  'projects.lead': 'Şu an odağımda Blokla var. Staj ve freelance işlerimi zaman çizelgesinde bulabilirsiniz.',
+  'projects.lead': 'Önce kendi ürünüm Blokla. Stajlarda ve freelance olarak çalıştığım ürünler hemen aşağıda, Yol bölümünde.',
   'projects.purpose': 'Amaç',
   'projects.role': 'Rolüm',
   'projects.stack': 'Teknolojiler',
@@ -84,6 +76,7 @@ const tr = {
   'projects.previewNote': 'Arayüzden esinlenen temsili görsel',
 
   'skills.kicker': 'Beceriler',
+  'skills.languages': 'Diller',
   'skills.title': 'Nerede öğrendim, nerede kullandım',
   'skills.lead': 'Burada yüzdelik çubuklar yok. Her teknolojinin yanında onunla nasıl tanıştığımı yazdım.',
 
@@ -130,7 +123,6 @@ const en: Dictionary = {
   'a11y.external': '(opens in a new tab)',
 
   'nav.why': 'Why me?',
-  'nav.about': 'About',
   'nav.chat': 'Let’s talk',
   'nav.journey': 'Path',
   'nav.projects': 'Projects',
@@ -139,7 +131,7 @@ const en: Dictionary = {
 
   'hero.eyebrow': 'Hi, I’m',
   'hero.cta.secondary': 'Get in touch',
-  'hero.cta.why': 'Why me?',
+  'hero.cta.projects': 'See my projects',
   'hero.cta.cv': 'Download CV',
   'hero.available': 'Open to job and internship opportunities',
 
@@ -147,13 +139,6 @@ const en: Dictionary = {
   'why.reasons': 'What I base this on',
   'why.evidence': 'Proof',
   'why.cta': 'Give me a task and see',
-  'about.kicker': 'About',
-  'about.title': 'In short.',
-  'about.facts': 'At a glance',
-  'about.fact.location': 'Based in',
-  'about.fact.school': 'Studying',
-  'about.fact.focus': 'Focus',
-  'about.fact.languages': 'Languages',
 
   'chat.kicker': 'Let’s talk',
   'chat.title': 'A short chat, before any interview.',
@@ -180,7 +165,7 @@ const en: Dictionary = {
 
   'projects.kicker': 'Projects',
   'projects.title': 'Things I’ve worked on',
-  'projects.lead': 'Blokla is my current focus. My internship and freelance work is in the timeline above.',
+  'projects.lead': 'My own product, Blokla, comes first. The products I worked on in internships and freelance are right below, in the Path section.',
   'projects.purpose': 'Purpose',
   'projects.role': 'My role',
   'projects.stack': 'Technologies',
@@ -193,6 +178,7 @@ const en: Dictionary = {
   'projects.previewNote': 'Illustration inspired by the app’s interface',
 
   'skills.kicker': 'Skills',
+  'skills.languages': 'Languages',
   'skills.title': 'Where I learned it, where I used it',
   'skills.lead': 'No percentage bars here. Next to each technology I wrote down how I came to know it.',
 

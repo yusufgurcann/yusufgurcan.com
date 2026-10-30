@@ -6,7 +6,6 @@ import type { UiKey } from '@/i18n/ui';
  */
 export const SECTION = {
   why: 'neden-ben',
-  about: 'hakkimda',
   chat: 'tanisalim',
   journey: 'yol',
   projects: 'projeler',
@@ -21,12 +20,11 @@ export interface NavItem {
 }
 
 export const NAV_ITEMS: readonly NavItem[] = [
-  { href: `#${SECTION.why}`, label: 'nav.why' },
-  { href: `#${SECTION.about}`, label: 'nav.about' },
-  { href: `#${SECTION.chat}`, label: 'nav.chat' },
-  { href: `#${SECTION.journey}`, label: 'nav.journey' },
   { href: `#${SECTION.projects}`, label: 'nav.projects' },
+  { href: `#${SECTION.journey}`, label: 'nav.journey' },
+  { href: `#${SECTION.why}`, label: 'nav.why' },
   { href: `#${SECTION.skills}`, label: 'nav.skills' },
+  { href: `#${SECTION.chat}`, label: 'nav.chat' },
   { href: `#${SECTION.contact}`, label: 'nav.contact' },
 ];
 

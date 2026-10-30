@@ -47,8 +47,8 @@
       - Turkish and English localization
   stack: [Swift, SwiftUI, Swift Package]
   status:
-    tr: Geliştirme sürüyor · Yayın durumu henüz kesin değil
-    en: In development · Release not yet decided
+    tr: App Store incelemesinde
+    en: In App Store review
   focus:
     tr:
       - Blokların ızgaraya doğru yerleşmesi

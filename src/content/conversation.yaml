@@ -1,36 +1,23 @@
 # "Tanışalım" sohbeti. Ziyaretçi sorar (question), Yusuf cevaplar (answer).
 # Cevaplar kısa tutulmalı; her biri bir mesaj balonu olarak görünür.
 
-- id: intro
+- id: real-work
   order: 1
   question:
-    tr: Merhaba! Kısaca kendinden bahseder misin?
-    en: Hi! Could you tell me a bit about yourself?
+    tr: Merhaba! Gerçek projelerde çalıştın mı?
+    en: Hi! Have you worked on real projects?
   answer:
     tr: >-
-      Merhaba, ben Yusuf. Flutter ile stajlarda ve projelerde mobil uygulamalar geliştirdim; iOS
-      tarafında Swift ve SwiftUI ile kendi oyunum Blokla’yı geliştiriyorum.
+      Evet; Mayıs 2024’ten bu yana 8 projede. Uplide’da İşim Sağlık ve Social-Up, Dijital
+      Gen’de GenSight, ARBooks ve GenFollow; freelance olarak PetJoo, gönüllü olarak İyiliği
+      Kodlayanlar’ın uygulaması. Bir de App Store incelemesinde olan kendi iOS oyunum Blokla.
     en: >-
-      Hi, I’m Yusuf. I’ve built mobile apps with Flutter in internships and projects, and on iOS
-      I’m building my own game, Blokla, with Swift and SwiftUI.
-
-- id: real-work
-  order: 2
-  question:
-    tr: Gerçek bir projede çalıştın mı?
-    en: Have you worked on real projects?
-  answer:
-    tr: >-
-      Evet. Dijital Gen’deki stajımda Flutter ile mobil uygulama geliştirdim, REST API
-      entegrasyonları ve hata düzeltmeleri yaptım. Ayrıca bir tanıdığımın projesi olan PetJoo’ya
-      dört ay freelance destek verdim.
-    en: >-
-      Yes. During my internship at Dijital Gen I built mobile apps with Flutter and worked on REST
-      API integrations and bug fixes. I also spent four months supporting PetJoo, an
-      acquaintance’s project, as a freelancer.
+      Yes: 8 projects since May 2024. İşim Sağlık and Social-Up at Uplide; GenSight, ARBooks
+      and GenFollow at Dijital Gen; PetJoo as a freelancer; İyiliği Kodlayanlar’s app as a
+      volunteer. Plus my own iOS game, Blokla, now in App Store review.
 
 - id: handoff
-  order: 3
+  order: 2
   question:
     tr: Sana bir iş verdiğimizde ne olur?
     en: What happens when we give you a task?
@@ -43,7 +30,7 @@
       get stuck, and hand it over. No surprises; you always know where the work stands.
 
 - id: unknown
-  order: 4
+  order: 3
   question:
     tr: Bilmediğin bir konuyla karşılaşınca ne yaparsın?
     en: What do you do when you run into something you don’t know?
@@ -56,7 +43,7 @@
       I’ve learned in a project.
 
 - id: team
-  order: 5
+  order: 4
   question:
     tr: Ekiple aran nasıl?
     en: How do you get along with a team?
@@ -72,7 +59,7 @@
       let my part slip.
 
 - id: feedback
-  order: 6
+  order: 5
   question:
     tr: Kodun eleştirilirse?
     en: What if your code gets criticised?
@@ -80,21 +67,8 @@
     tr: Sevinirim. Geri bildirim, bir sonraki sürümün daha iyi olması demek.
     en: I’m glad. Feedback means the next version will be better.
 
-- id: care
-  order: 7
-  question:
-    tr: Bir uygulamada en çok neye dikkat edersin?
-    en: What do you care about most in an app?
-  answer:
-    tr: >-
-      Sadece çalışmasına değil; akıcı, anlaşılır ve güvenilir olmasına. Blokla’da bir bloğun
-      parmağın altında doğru kareye oturması gibi küçük ayrıntılarla uğraşmayı seviyorum.
-    en: >-
-      Not just that it works, but that it feels smooth, clear and reliable. In Blokla I enjoy
-      sweating small details, like a block landing on exactly the right cell under your finger.
-
 - id: goal
-  order: 8
+  order: 6
   question:
     tr: Nasıl bir yerde çalışmak istiyorsun?
     en: Where would you like to work?

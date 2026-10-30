@@ -7,9 +7,6 @@
   headline:
     tr: Verdiğiniz işi sahiplenir, test eder ve içiniz rahat teslim ederim.
     en: I own the work you give me, test it, and hand it over so you don’t have to worry.
-  focus:
-    tr: Mobil uygulama geliştirme · Flutter ve iOS (Swift, SwiftUI)
-    en: Mobile app development · Flutter and iOS (Swift, SwiftUI)
   languages:
     tr: Türkçe · İngilizce
     en: Turkish · English
@@ -26,25 +23,28 @@
   cv:
     summary:
       tr: >-
-        iOS ve Flutter geliştiricisiyim. Uplide Teknoloji ve Dijital Gen’deki yazılım stajlarımda
+        iOS ve Flutter geliştiricisiyim; Mayıs 2024’ten bu yana 8 projede yer aldım. Uplide
+        Teknoloji ve Dijital Gen’deki yazılım stajlarımda
         Flutter ile mobil uygulama geliştirme, REST API entegrasyonu, arayüz geliştirme, hata
         düzeltme ve test süreçlerinde yer aldım; freelance ve gönüllü projelerde mevcut Flutter
-        uygulamalarına katkı verdim. Şu anda Swift ve SwiftUI ile kişisel iOS oyunum Blokla’yı
-        geliştiriyorum. İstanbul Topkapı Üniversitesi Yönetim Bilişim Sistemleri öğrencisiyim.
+        uygulamalarına katkı verdim. Swift ve SwiftUI ile geliştirdiğim kişisel iOS oyunum Blokla
+        App Store incelemesinde. İstanbul Topkapı Üniversitesi Yönetim Bilişim Sistemleri öğrencisiyim.
       en: >-
-        iOS and Flutter developer. During software internships at Uplide Teknoloji and Dijital Gen,
+        iOS and Flutter developer who has worked on 8 projects since May 2024. During software
+        internships at Uplide Teknoloji and Dijital Gen,
         worked on Flutter mobile app development, REST API integration, UI development, bug fixing
         and testing; contributed to existing Flutter apps in freelance and volunteer projects.
-        Currently building the personal iOS game Blokla with Swift and SwiftUI. Management
+        My personal iOS game Blokla, built with Swift and SwiftUI, is in App Store review. Management
         Information Systems student at Istanbul Topkapı University.
   # Girişteki "Bir bakışta" kartı: işe alımcının ilk saniyede göreceği birkaç somut bilgi.
   glance:
     label: { tr: Bir bakışta, en: At a glance }
     facts:
-      - value: { tr: '6', en: '6' }
+      # 8 = Uplide 2 + Dijital Gen 3 + PetJoo + İyiliği Kodlayanlar + Blokla (Mayıs 2024'ten beri)
+      - value: { tr: '8', en: '8' }
         label:
-          tr: İş ve staj kapsamında yer aldığım ürün
-          en: Products I worked on in jobs and internships
+          tr: Mayıs 2024’ten bu yana yer aldığım proje
+          en: Projects I’ve worked on since May 2024
       - value: { tr: '2', en: '2' }
         label:
           tr: Yazılım stajı · Uplide, Dijital Gen
@@ -53,10 +53,10 @@
         label:
           tr: Freelance proje · PetJoo
           en: Freelance project · PetJoo
-      - value: { tr: 1 yıl, en: 1 yr }
+      - value: { tr: '1', en: '1' }
         label:
-          tr: İyiliği Kodlayanlar · eğitim ve gönüllü geliştirme
-          en: İyiliği Kodlayanlar · training and volunteer work
+          tr: App Store’a gönderdiğim iOS uygulaması · Blokla
+          en: iOS app submitted to the App Store · Blokla
     now:
       tr: 'Şu an: Swift ve SwiftUI ile Blokla’yı geliştiriyorum'
       en: 'Right now: building Blokla with Swift and SwiftUI'
@@ -78,24 +78,3 @@
     offer:
       tr: Ekibinizin haftasını yiyen işleri bana bırakın; siz daha önemli olana odaklanın.
       en: Hand me the work that eats your team’s week, and focus on what matters more.
-  about:
-    tr:
-      - >-
-        Lisede bilişim okurken çalışmaya başladım; teknik serviste geçen yıllar bana iş disiplini
-        kazandırdı. Ardından yazılıma geçtim: Uplide ve Dijital Gen’deki stajlarımda Flutter ile
-        mobil uygulamalar geliştirdim, REST API entegrasyonu, hata düzeltme ve testlerde yer aldım;
-        PetJoo’ya freelance, İyiliği Kodlayanlar’a gönüllü geliştirici olarak katkı verdim.
-      - >-
-        Bugün İstanbul Topkapı Üniversitesi’nde YBS okurken iOS tarafında Swift ve SwiftUI ile
-        Blokla’yı geliştiriyorum. Benim için iyi yazılım akıcı, anlaşılır ve güvenilir olandır.
-        Hedefim, ekibine zaman kazandıran ve gönül rahatlığıyla iş verilen bir geliştirici olmak.
-    en:
-      - >-
-        I started working while studying IT in high school; my years in technical service taught
-        me work discipline. Then I moved into software: in internships at Uplide and Dijital Gen I
-        built mobile apps with Flutter and worked on REST API integration, bug fixing and testing;
-        I also contributed to PetJoo as a freelancer and to İyiliği Kodlayanlar as a volunteer developer.
-      - >-
-        Today, while studying MIS at Istanbul Topkapı University, I’m building Blokla on iOS with
-        Swift and SwiftUI. To me, good software is smooth, clear and reliable. My goal is to be the
-        developer who saves the team time and can be trusted with work without a second thought.

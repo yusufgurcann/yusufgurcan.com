@@ -8,9 +8,11 @@ import { useTranslations } from '@/i18n/translate';
 interface Props {
   locale: Locale;
   groups: readonly SkillGroup[];
+  /** Spoken languages, e.g. "Türkçe · İngilizce". */
+  languages: string;
 }
 
-const { locale, groups } = Astro.props;
+const { locale, groups, languages } = Astro.props;
 const t = useTranslations(locale);
 ---
 
@@ -35,9 +37,28 @@ const t = useTranslations(locale);
       ))
     }
   </div>
+  <p class="languages">
+    <span class="languages__label caption">{t('skills.languages')}</span>
+    {languages}
+  </p>
 </Section>
 
 <style>
+  .languages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-m);
+    align-items: baseline;
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--line);
+  }
+
+  .languages__label {
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
   .skills {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));

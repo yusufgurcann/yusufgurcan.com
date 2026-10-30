@@ -2,7 +2,6 @@
 
 - id: topkapi
   order: 1
-  current: true
   school:
     tr: İstanbul Topkapı Üniversitesi
     en: Istanbul Topkapı University

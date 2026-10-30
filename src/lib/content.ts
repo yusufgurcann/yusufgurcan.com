@@ -19,10 +19,8 @@ export type JourneyKind = CollectionEntry<'journey'>['data']['kind'];
 export interface Profile {
   readonly role: string;
   readonly headline: string;
-  readonly focus: string;
   readonly languages: string;
   readonly intro: string;
-  readonly about: readonly string[];
   readonly pitch: { readonly question: string; readonly answer: string; readonly offer: string };
   readonly cvSummary: string;
   readonly glance: {
@@ -79,7 +77,6 @@ export interface EducationEntry {
   readonly school: string;
   readonly program: string;
   readonly status: string;
-  readonly current: boolean;
   readonly period: PeriodLabel | null;
 }
 
@@ -112,10 +109,8 @@ export async function getProfile(locale: Locale): Promise<Profile> {
   return {
     role: pick(data.role, locale),
     headline: pick(data.headline, locale),
-    focus: pick(data.focus, locale),
     languages: pick(data.languages, locale),
     intro: pick(data.intro, locale),
-    about: pick(data.about, locale),
     cvSummary: pick(data.cv.summary, locale),
     glance: {
       label: pick(data.glance.label, locale),
@@ -183,7 +178,6 @@ export async function getEducation(locale: Locale): Promise<EducationEntry[]> {
     school: pick(data.school, locale),
     program: pick(data.program, locale),
     status: pick(data.status, locale),
-    current: data.current,
     period: data.period ? formatPeriod(data.period, locale, t) : null,
   }));
 }

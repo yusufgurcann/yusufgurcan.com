@@ -41,10 +41,8 @@ const profile = defineCollection({
   schema: z.object({
     role: localized,
     headline: localized,
-    focus: localized,
     languages: localized,
     intro: localized,
-    about: localizedList,
     /** Printable CV: a keyword-rich summary for applicant tracking systems. */
     cv: z.object({ summary: localized }),
     /** Hero "at a glance" card: a few hard facts a recruiter can take in at once. */
@@ -124,8 +122,6 @@ const education = defineCollection({
     school: localized,
     program: localized,
     status: localized,
-    /** The school currently attended; shown in the About facts card. */
-    current: z.boolean().default(false),
     period: period.optional(),
   }),
 });

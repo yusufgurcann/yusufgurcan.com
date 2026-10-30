@@ -38,8 +38,8 @@ const lastName = rest.join(' ');
       <p class="hero__intro">{profile.intro}</p>
       <div class="hero__actions">
         <LinkButton href={`#${SECTION.contact}`}>{t('hero.cta.secondary')}</LinkButton>
-        <LinkButton href={`#${SECTION.why}`} variant="ghost">
-          {t('hero.cta.why')} <span aria-hidden="true">↓</span>
+        <LinkButton href={`#${SECTION.projects}`} variant="ghost">
+          {t('hero.cta.projects')} <span aria-hidden="true">↓</span>
         </LinkButton>
         {
           site.contact.cv && (
