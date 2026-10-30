@@ -2,18 +2,27 @@
  * Short scripted Blokla replay for the featured project card.
  *
  * Plays once when the preview scrolls into view: a "finger" drags pieces from
- * the tray onto the board, full rows/columns clear, the score counts up and a
- * combo badge pops. Afterwards a "watch again" button appears.
+ * the tray onto the board, full rows/columns burst into particles, the score
+ * counts up, combos shake the board, and once the tray is empty a fresh set of
+ * pieces is dealt, as in the real game. Afterwards a "watch again" button appears.
  *
  * Everything comes from the server-rendered markup (BloklaPreview.astro):
- * board tiles carry data-r/data-c, tray pieces carry data-cells/data-paint and
- * the moves are in data-moves. Skipped entirely with reduced motion.
+ * board tiles carry data-r/data-c, tray pieces carry data-cells/data-paint, the
+ * moves are in data-moves and the dealt pieces in data-deal. Skipped entirely
+ * with reduced motion.
  */
 type Cell = readonly [row: number, col: number];
 
 interface Move {
   readonly piece: number;
   readonly at: Cell;
+}
+
+interface DealtPiece {
+  readonly paint: string;
+  readonly cols: number;
+  /** Rows of the piece; 'x' marks a block. */
+  readonly rows: readonly string[];
 }
 
 const SIZE = 8;
@@ -25,9 +34,12 @@ const TIMING = {
   drag: 950,
   settle: 260,
   clear: 420,
-  between: 450,
+  between: 420,
   badge: 1100,
+  deal: 420,
 } as const;
+
+const PARTICLES_PER_TILE = 3;
 
 const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 const easeInOut = 'cubic-bezier(0.65, 0, 0.35, 1)';
@@ -106,6 +118,7 @@ class Replay {
   constructor(
     private readonly game: HTMLElement,
     private readonly moves: readonly Move[],
+    private readonly deal: readonly DealtPiece[],
   ) {}
 
   /** (Re)binds to the current DOM — called before every play. */
@@ -126,6 +139,36 @@ class Replay {
       await this.clearLines();
       await wait(TIMING.between);
     }
+    await this.dealPieces();
+  }
+
+  /** Refills the empty tray with fresh pieces sliding up from below. */
+  private async dealPieces(): Promise<void> {
+    const tray = this.game.querySelector<HTMLElement>('.blokla__tray')!;
+    tray.replaceChildren();
+    const arrivals = this.deal.map((dealt, index) => {
+      const piece = document.createElement('span');
+      piece.className = 'piece';
+      piece.style.setProperty('--cols', String(dealt.cols));
+      piece.style.setProperty('--paint', dealt.paint);
+      for (const row of dealt.rows) {
+        for (const mark of row) {
+          const cell = document.createElement('span');
+          if (mark === 'x') cell.className = 'tile tile--block';
+          piece.append(cell);
+        }
+      }
+      tray.append(piece);
+      return piece.animate(
+        [
+          { opacity: 0, transform: 'translateY(26px) scale(0.6)' },
+          { opacity: 1, transform: 'translateY(-4px) scale(1.06)', offset: 0.7 },
+          { opacity: 1, transform: 'translateY(0) scale(1)' },
+        ],
+        { duration: TIMING.deal, delay: index * 110, easing: easeSnap, fill: 'backwards' },
+      ).finished;
+    });
+    await Promise.all(arrivals);
   }
 
   /** Position of `el` relative to the game container, in px. */
@@ -218,8 +261,12 @@ class Replay {
       ),
     );
     const points = lines * POINTS_PER_LINE * this.combo;
+    this.burst(cells);
     this.popup(`+${points}`, cells);
-    if (this.combo > 1) this.badge(`COMBO ×${this.combo}`);
+    if (this.combo > 1) {
+      this.badge(`COMBO ×${this.combo}${this.combo > 2 ? '!' : ''}`, this.combo);
+      this.shake(this.combo);
+    }
 
     await Promise.all(flashes.map((animation) => animation.finished));
     for (const [r, c] of cells) {
@@ -249,15 +296,72 @@ class Replay {
     });
   }
 
+  /** Centre of the cleared cells, relative to the game container. */
+  private centre(cells: readonly Cell[]) {
+    const boxes = cells.map((cell) => this.rect(this.board.tile(cell)));
+    const left = Math.min(...boxes.map((b) => b.x));
+    const right = Math.max(...boxes.map((b) => b.x + b.w));
+    const top = Math.min(...boxes.map((b) => b.y));
+    const bottom = Math.max(...boxes.map((b) => b.y + b.h));
+    return { x: (left + right) / 2, y: (top + bottom) / 2 };
+  }
+
+  /** Small squares in each tile's colour, flying out and falling away. */
+  private burst(cells: readonly Cell[]): void {
+    for (const cell of cells) {
+      const tile = this.board.tile(cell);
+      const box = this.rect(tile);
+      const paint = tile.style.getPropertyValue('--paint');
+      for (let i = 0; i < PARTICLES_PER_TILE; i++) {
+        const particle = document.createElement('span');
+        particle.className = 'blokla__particle';
+        particle.style.setProperty('--paint', paint);
+        particle.style.left = `${box.x + box.w / 2}px`;
+        particle.style.top = `${box.y + box.h / 2}px`;
+        this.game.append(particle);
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 18 + Math.random() * 34;
+        const dx = Math.cos(angle) * distance;
+        const dy = Math.sin(angle) * distance - 10;
+        particle
+          .animate(
+            [
+              { opacity: 1, transform: 'translate(-50%, -50%) scale(1) rotate(0deg)' },
+              {
+                opacity: 0,
+                transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy + 26}px)) scale(0.4) rotate(${dx * 6}deg)`,
+              },
+            ],
+            { duration: 520 + Math.random() * 260, delay: cell[1] * 22, easing: 'cubic-bezier(0.2, 0.7, 0.4, 1)', fill: 'forwards' },
+          )
+          .finished.then(() => particle.remove());
+      }
+    }
+  }
+
+  /** A short shake of the board; stronger for bigger combos. */
+  private shake(combo: number): void {
+    const amount = Math.min(2 + combo * 1.5, 7);
+    this.boardEl.animate(
+      [
+        { transform: 'translate(0, 0)' },
+        { transform: `translate(${-amount}px, ${amount / 2}px)` },
+        { transform: `translate(${amount}px, ${-amount / 2}px)` },
+        { transform: `translate(${-amount / 2}px, 0)` },
+        { transform: 'translate(0, 0)' },
+      ],
+      { duration: 320, easing: 'ease-out' },
+    );
+  }
+
   /** Floating "+points" over the cleared cells. */
   private popup(text: string, cells: readonly Cell[]): void {
-    const rows = cells.map(([r]) => r);
-    const midRow = (Math.min(...rows) + Math.max(...rows)) / 2;
-    const anchor = this.rect(this.board.tile([Math.round(midRow), 0]));
+    const anchor = this.centre(cells);
     const el = document.createElement('span');
     el.className = 'blokla__popup';
     el.textContent = text;
-    el.style.top = `${anchor.y}px`;
+    el.style.left = `${anchor.x}px`;
+    el.style.top = `${anchor.y - 10}px`;
     this.game.append(el);
     el.animate(
       [
@@ -269,16 +373,17 @@ class Replay {
     ).finished.then(() => el.remove());
   }
 
-  /** Big "COMBO ×n" badge in the middle of the board. */
-  private badge(text: string): void {
+  /** Big "COMBO ×n" badge in the middle of the board; grows with the combo. */
+  private badge(text: string, combo: number): void {
     const el = document.createElement('span');
     el.className = 'blokla__combo';
     el.textContent = text;
     this.game.append(el);
+    const peak = 1.05 + combo * 0.08;
     el.animate(
       [
         { opacity: 0, transform: 'scale(0.4) rotate(-8deg)' },
-        { opacity: 1, transform: 'scale(1.15) rotate(3deg)', offset: 0.25 },
+        { opacity: 1, transform: `scale(${peak}) rotate(3deg)`, offset: 0.25 },
         { opacity: 1, transform: 'scale(1) rotate(0deg)', offset: 0.7 },
         { opacity: 0, transform: 'scale(0.9) rotate(0deg)' },
       ],
@@ -293,8 +398,9 @@ function initOne(root: HTMLElement): void {
   if (!game || !again) return;
 
   const moves = JSON.parse(game.dataset['moves'] ?? '[]') as Move[];
+  const deal = JSON.parse(game.dataset['deal'] ?? '[]') as DealtPiece[];
   const initial = game.innerHTML;
-  const replay = new Replay(game, moves);
+  const replay = new Replay(game, moves, deal);
   let playing = false;
 
   const run = async () => {

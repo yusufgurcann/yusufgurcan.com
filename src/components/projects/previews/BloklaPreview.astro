@@ -19,15 +19,16 @@ interface Props {
 
 const t = useTranslations(Astro.props.locale);
 
+// A busy late-game board: every clear below removes one line, so it stays full.
 const BOARD = [
-  '........',
-  '........',
-  '........',
-  '........',
-  'c......y',
-  'cc...pyy',
-  'rroo.bgg',
-  'rroo.bgg',
+  '.bb.yy.c',
+  '.b.ppy.c',
+  '.ggp.rrc',
+  'o.ggbrrc',
+  'o.yyb.rc',
+  'ccy.bboo',
+  'cc.rrbo.',
+  'r.pprbgg',
 ] as const;
 
 /** Pieces in the tray; `cells` rows use 'x' for a block. */
@@ -39,11 +40,20 @@ const TRAY = [
 
 /**
  * The replay script: which tray piece goes where (top-left cell, [row, column]).
- * Move 1 fills column 4 → two rows clear. Move 2 completes row 5 → combo ×2.
+ * 1: purple bar completes column 0 → clear.   2: orange pair completes row 7 → combo ×2.
+ * 3: green square completes row 3 → combo ×3.  (Verified with a small simulation.)
  */
 const MOVES = [
-  { piece: 0, at: [5, 4] },
-  { piece: 1, at: [5, 2] },
+  { piece: 0, at: [0, 0] },
+  { piece: 1, at: [7, 0] },
+  { piece: 2, at: [3, 0] },
+] as const;
+
+/** Fresh pieces dealt into the tray once it is empty, as in the real game. */
+const DEAL = [
+  { color: 'y', cells: ['xxx', '.x.'] },
+  { color: 'b', cells: ['x.', 'x.', 'xx'] },
+  { color: 'r', cells: ['x', 'x'] },
 ] as const;
 
 const START_SCORE = 1240;
@@ -66,7 +76,14 @@ const formatScore = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' 
 ---
 
 <div class="blokla-replay" data-blokla-replay>
-  <div class="blokla" aria-hidden="true" data-moves={JSON.stringify(MOVES)}>
+  <div
+    class="blokla"
+    aria-hidden="true"
+    data-moves={JSON.stringify(MOVES)}
+    data-deal={JSON.stringify(
+      DEAL.map((piece) => ({ paint: PALETTE[piece.color], cols: piece.cells[0].length, rows: piece.cells })),
+    )}
+  >
     <div class="blokla__top">
       <span class="blokla__brand">BLOKLA<span class="blokla__bang">!</span></span>
       <span class="blokla__score" data-score={START_SCORE}>{formatScore(START_SCORE)}</span>
@@ -283,6 +300,16 @@ const formatScore = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' 
     font-size: 1.3rem;
     letter-spacing: 0.04em;
     box-shadow: 0 8px 20px -6px rgb(255 138 61 / 0.7);
+  }
+
+  .blokla__particle {
+    position: absolute;
+    z-index: 4;
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+    background: var(--paint);
+    pointer-events: none;
   }
 
   .blokla-replay__again {
