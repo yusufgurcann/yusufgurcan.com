@@ -1,28 +1,52 @@
 ---
 /**
- * Illustrated Blokla screen, drawn with HTML/CSS in the game's "Classic"
- * theme (colours taken from GameTheme.classic in the iOS project).
- * Purely decorative; used until real screenshots are added to projects.yaml.
+ * Blokla screen drawn with HTML/CSS in the game's "Classic" theme
+ * (colours from GameTheme.classic in the iOS project), plus a short scripted
+ * replay: pieces are dragged from the tray, lines clear, a combo pops.
  *
- * Board legend: '.' empty · '*' placement preview · r o y g c b p = palette.
+ * The server-rendered markup is the replay's first frame, so the preview looks
+ * complete without JavaScript or with reduced motion. The replay itself lives
+ * in scripts/blokla-replay.ts and reads everything it needs from data-* attributes.
+ *
+ * Board legend: '.' empty · r o y g c b p = palette colours.
  */
+import type { Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/translate';
+
+interface Props {
+  locale: Locale;
+}
+
+const t = useTranslations(Astro.props.locale);
+
 const BOARD = [
   '........',
   '........',
-  '...**...',
-  '...*....',
-  'c.....y.',
-  'cc..b.yy',
-  'rroobbgg',
+  '........',
+  '........',
+  'c......y',
+  'cc...pyy',
+  'rroo.bgg',
   'rroo.bgg',
 ] as const;
 
-/** Pieces waiting in the tray below the board. */
+/** Pieces in the tray; `cells` rows use 'x' for a block. */
 const TRAY = [
-  { color: 'o', cells: ['x.', 'x.', 'xx'] },
-  { color: 'p', cells: ['xxx'] },
+  { color: 'p', cells: ['x', 'x', 'x'] },
+  { color: 'o', cells: ['xx'] },
   { color: 'g', cells: ['xx', 'xx'] },
 ] as const;
+
+/**
+ * The replay script: which tray piece goes where (top-left cell, [row, column]).
+ * Move 1 fills column 4 → two rows clear. Move 2 completes row 5 → combo ×2.
+ */
+const MOVES = [
+  { piece: 0, at: [5, 4] },
+  { piece: 1, at: [5, 2] },
+] as const;
+
+const START_SCORE = 1240;
 
 const PALETTE: Record<string, string> = {
   r: '#F2453D',
@@ -34,47 +58,78 @@ const PALETTE: Record<string, string> = {
   p: '#B15CF2',
 };
 
-const boardCells = BOARD.flatMap((row) => [...row]);
+/** "x." rows → [[row, col], …] offsets of the filled cells. */
+const offsets = (cells: readonly string[]) =>
+  cells.flatMap((row, r) => [...row].flatMap((c, col) => (c === 'x' ? [[r, col]] : [])));
+
+const formatScore = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 ---
 
-<div class="blokla" aria-hidden="true">
-  <div class="blokla__top">
-    <span class="blokla__brand">BLOKLA<span class="blokla__bang">!</span></span>
-    <span class="blokla__score">1 240</span>
+<div class="blokla-replay" data-blokla-replay>
+  <div class="blokla" aria-hidden="true" data-moves={JSON.stringify(MOVES)}>
+    <div class="blokla__top">
+      <span class="blokla__brand">BLOKLA<span class="blokla__bang">!</span></span>
+      <span class="blokla__score" data-score={START_SCORE}>{formatScore(START_SCORE)}</span>
+    </div>
+
+    <div class="blokla__board">
+      {
+        BOARD.flatMap((row, r) =>
+          [...row].map((symbol, c) =>
+            symbol === '.' ? (
+              <span class="tile tile--empty" data-r={r} data-c={c} />
+            ) : (
+              <span class="tile tile--block" data-r={r} data-c={c} style={`--paint:${PALETTE[symbol]}`} />
+            ),
+          ),
+        )
+      }
+    </div>
+
+    <div class="blokla__tray">
+      {
+        TRAY.map((piece) => (
+          <span
+            class="piece"
+            style={`--cols:${piece.cells[0].length};--paint:${PALETTE[piece.color]}`}
+            data-paint={PALETTE[piece.color]}
+            data-cells={JSON.stringify(offsets(piece.cells))}
+          >
+            {piece.cells.flatMap((row) => [...row].map((c) => (c === 'x' ? <span class="tile tile--block" /> : <span />)))}
+          </span>
+        ))
+      }
+    </div>
   </div>
 
-  <div class="blokla__board">
-    {
-      boardCells.map((symbol) =>
-        symbol === '.' ? (
-          <span class="tile tile--empty" />
-        ) : symbol === '*' ? (
-          <span class="tile tile--ghost" />
-        ) : (
-          <span class="tile tile--block" style={`--paint:${PALETTE[symbol]}`} />
-        ),
-      )
-    }
-  </div>
-
-  <div class="blokla__tray">
-    {
-      TRAY.map((piece) => (
-        <span class="piece" style={`--cols:${piece.cells[0].length};--paint:${PALETTE[piece.color]}`}>
-          {piece.cells.flatMap((row) =>
-            [...row].map((c) => (c === 'x' ? <span class="tile tile--block" /> : <span />)),
-          )}
-        </span>
-      ))
-    }
-  </div>
+  <button class="blokla-replay__again" type="button" data-replay-again hidden>
+    <span aria-hidden="true">↻</span>
+    {t('projects.replay')}
+  </button>
 </div>
 
-<style>
+<script>
+  import { initBloklaReplay } from '@/scripts/blokla-replay';
+  initBloklaReplay();
+</script>
+
+<!--
+  Global (but .blokla-scoped) styles: the replay creates elements at runtime,
+  which Astro's per-component scoping would not reach.
+-->
+<style is:global>
+  .blokla-replay {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-s);
+  }
+
   .blokla {
     --board: #1a2459;
     --empty: rgb(15 22 64 / 0.85);
     --accent: #ffd23f;
+    --gap: 3px;
+    position: relative;
     display: grid;
     gap: 1.1rem;
     width: min(100%, 20rem);
@@ -85,6 +140,7 @@ const boardCells = BOARD.flatMap((row) => [...row]);
       0 0 0 6px color-mix(in srgb, var(--ink) 92%, transparent),
       0 30px 60px -30px rgb(17 28 71 / 0.8);
     font-family: ui-rounded, 'SF Pro Rounded', system-ui, sans-serif;
+    user-select: none;
   }
 
   .blokla__top {
@@ -120,33 +176,35 @@ const boardCells = BOARD.flatMap((row) => [...row]);
   }
 
   .blokla__board {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(8, 1fr);
-    gap: 3px;
+    gap: var(--gap);
     padding: 6px;
     border-radius: 14px;
     background: var(--board);
   }
 
-  .tile {
+  .blokla .tile {
     aspect-ratio: 1;
     border-radius: 5px;
   }
 
-  .tile--empty {
+  .blokla .tile--empty {
     background: var(--empty);
   }
 
   /* "Bevel" block style: light top edge, darker bottom edge. */
-  .tile--block {
+  .blokla .tile--block {
     background: linear-gradient(180deg, color-mix(in srgb, var(--paint) 80%, #fff), var(--paint) 45%);
     box-shadow:
       inset 0 -3px 0 color-mix(in srgb, var(--paint) 60%, #000),
       inset 0 2px 0 rgb(255 255 255 / 0.35);
   }
 
-  .tile--ghost {
-    background: var(--empty);
+  /* Placement preview while a piece is dragged over the board. */
+  .blokla .tile--ghost {
+    background: color-mix(in srgb, var(--paint, #fff) 35%, var(--empty));
     box-shadow: inset 0 0 0 2px rgb(255 255 255 / 0.55);
   }
 
@@ -157,21 +215,95 @@ const boardCells = BOARD.flatMap((row) => [...row]);
     min-height: 4.2rem;
   }
 
-  .piece {
+  .blokla .piece {
     display: grid;
     grid-template-columns: repeat(var(--cols), 1.05rem);
     gap: 2px;
+    transition: opacity 200ms, transform 200ms;
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .tile--ghost {
-      animation: ghost-pulse 1.6s ease-in-out infinite;
-    }
+  .blokla .piece[data-used] {
+    opacity: 0;
   }
 
-  @keyframes ghost-pulse {
-    50% {
-      box-shadow: inset 0 0 0 2px rgb(255 255 255 / 0.2);
-    }
+  .blokla .piece[data-lifted] {
+    transform: scale(1.12);
+  }
+
+  /* ---- Elements created by the replay ---- */
+  .blokla__float {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    display: grid;
+    gap: var(--gap);
+    transform-origin: top left;
+    pointer-events: none;
+    filter: drop-shadow(0 10px 12px rgb(0 0 0 / 0.45));
+  }
+
+  .blokla__finger {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    width: 2.1rem;
+    height: 2.1rem;
+    margin: -0.2rem 0 0 -0.2rem;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.35);
+    box-shadow: 0 0 0 2px rgb(255 255 255 / 0.55);
+    pointer-events: none;
+  }
+
+  .blokla__popup,
+  .blokla__combo {
+    position: absolute;
+    z-index: 5;
+    left: 50%;
+    pointer-events: none;
+    font-weight: 900;
+    white-space: nowrap;
+    translate: -50% 0;
+  }
+
+  .blokla__popup {
+    color: #fff;
+    font-size: 1.1rem;
+    text-shadow: 0 2px 6px rgb(0 0 0 / 0.5);
+  }
+
+  .blokla__combo {
+    top: 38%;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    background: linear-gradient(#ffe66d, #ff8a3d);
+    color: #3a1d00;
+    font-size: 1.3rem;
+    letter-spacing: 0.04em;
+    box-shadow: 0 8px 20px -6px rgb(255 138 61 / 0.7);
+  }
+
+  .blokla-replay__again {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.95rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: var(--step--1);
+    font-weight: 500;
+  }
+
+  .blokla-replay__again:hover {
+    border-color: var(--accent);
+  }
+
+  /* `display` above would otherwise override the `hidden` attribute. */
+  .blokla-replay__again[hidden] {
+    display: none;
   }
 </style>

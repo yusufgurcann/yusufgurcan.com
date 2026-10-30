@@ -127,7 +127,7 @@ const Preview = PREVIEWS[project.id];
       ) : (
         Preview && (
           <figure class="featured__preview">
-            <Preview />
+            <Preview {locale} />
             <figcaption class="caption">{t('projects.previewNote')}</figcaption>
           </figure>
         )

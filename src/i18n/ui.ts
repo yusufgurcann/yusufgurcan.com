@@ -73,7 +73,8 @@ const tr = {
   'projects.links': 'Bağlantılar',
   'projects.also': 'Ayrıca',
   'projects.featured': 'Şu an üzerinde çalıştığım',
-  'projects.previewNote': 'Arayüzden esinlenen temsili görsel',
+  'projects.previewNote': 'Oyunun mantığını gösteren kısa, temsili bir tekrar',
+  'projects.replay': 'Tekrar izle',
 
   'skills.kicker': 'Beceriler',
   'skills.languages': 'Diller',
@@ -175,7 +176,8 @@ const en: Dictionary = {
   'projects.links': 'Links',
   'projects.also': 'Also',
   'projects.featured': 'What I’m working on now',
-  'projects.previewNote': 'Illustration inspired by the app’s interface',
+  'projects.previewNote': 'A short, illustrative replay of how the game plays',
+  'projects.replay': 'Watch again',
 
   'skills.kicker': 'Skills',
   'skills.languages': 'Languages',
