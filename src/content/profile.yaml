@@ -23,18 +23,17 @@
   cv:
     summary:
       tr: >-
-        iOS ve Flutter geliştiricisiyim; Mayıs 2024’ten bu yana 8 projede yer aldım. Uplide
-        Teknoloji ve Dijital Gen’deki yazılım stajlarımda
-        Flutter ile mobil uygulama geliştirme, REST API entegrasyonu, arayüz geliştirme, hata
-        düzeltme ve test süreçlerinde yer aldım; freelance ve gönüllü projelerde mevcut Flutter
-        uygulamalarına katkı verdim. Swift ve SwiftUI ile geliştirdiğim kişisel iOS oyunum Blokla
-        App Store incelemesinde. İstanbul Topkapı Üniversitesi Yönetim Bilişim Sistemleri öğrencisiyim.
+        iOS ve Flutter geliştiricisiyim. Uplide Teknoloji ve Dijital Gen’de mobil uygulama
+        geliştirme süreçlerinde görev aldım: Flutter ile uygulama geliştirme, REST API
+        entegrasyonu, arayüz geliştirme, hata düzeltme ve test. Freelance ve gönüllü projelerde
+        yer aldım. Ayrıca Swift ve SwiftUI ile bağımsız olarak geliştirdiğim iOS oyunum Blokla,
+        şu anda App Store inceleme sürecinde. İstanbul Topkapı Üniversitesi Yönetim Bilişim
+        Sistemleri öğrencisiyim.
       en: >-
-        iOS and Flutter developer who has worked on 8 projects since May 2024. During software
-        internships at Uplide Teknoloji and Dijital Gen,
-        worked on Flutter mobile app development, REST API integration, UI development, bug fixing
-        and testing; contributed to existing Flutter apps in freelance and volunteer projects.
-        My personal iOS game Blokla, built with Swift and SwiftUI, is in App Store review. Management
+        iOS and Flutter developer. At Uplide Teknoloji and Dijital Gen, worked on mobile app
+        development: building apps with Flutter, REST API integration, UI development, bug fixing
+        and testing. Took part in freelance and volunteer projects. My iOS game Blokla, built
+        independently with Swift and SwiftUI, is currently in App Store review. Management
         Information Systems student at Istanbul Topkapı University.
   # Girişteki "Bir bakışta" kartı: işe alımcının ilk saniyede göreceği birkaç somut bilgi.
   glance:
