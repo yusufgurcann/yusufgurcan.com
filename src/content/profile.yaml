@@ -39,11 +39,11 @@
   glance:
     label: { tr: Bir bakışta, en: At a glance }
     facts:
-      # 8 = Uplide 2 + Dijital Gen 3 + PetJoo + İyiliği Kodlayanlar + Blokla (Mayıs 2024'ten beri)
+      # 8 = Uplide 2 + Dijital Gen 3 + PetJoo + İyiliği Kodlayanlar + Blokla
       - value: { tr: '8', en: '8' }
         label:
-          tr: Mayıs 2024’ten bu yana yer aldığım proje
-          en: Projects I’ve worked on since May 2024
+          tr: Yer aldığım proje
+          en: Projects I’ve worked on
       - value: { tr: '2', en: '2' }
         label:
           tr: Yazılım stajı · Uplide, Dijital Gen
