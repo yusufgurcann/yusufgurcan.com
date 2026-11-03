@@ -125,6 +125,11 @@ const contact: ContactItem[] = [
                   <li>{item}</li>
                 ))}
                 {project.status && <li>{project.status}</li>}
+                {project.links.map((link) => (
+                  <li>
+                    {link.label}: <a href={link.url}>{prettyUrl(link.url)}</a>
+                  </li>
+                ))}
               </ul>
             </article>
           ))
@@ -253,6 +258,10 @@ const contact: ContactItem[] = [
   h3 {
     font-size: 10.5pt;
     font-weight: 600;
+  }
+
+  .entry a {
+    color: inherit;
   }
 
   .entry__meta {

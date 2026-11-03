@@ -10,7 +10,7 @@ import type { Locale } from './locales';
 const tr = {
   'meta.title': 'Yusuf Gürcan — iOS & Flutter Developer',
   'meta.description':
-    'Yusuf Gürcan: iOS ve Flutter geliştirici. Flutter ile stajlarda, freelance ve gönüllü projelerde mobil uygulamalar geliştirdi; iOS’ta Swift ve SwiftUI ile kendi oyunu Blokla’yı geliştiriyor.',
+    'Yusuf Gürcan: iOS ve Flutter geliştirici. Flutter ile stajlarda, freelance ve gönüllü projelerde mobil uygulamalar geliştirdi; iOS’ta Swift ve SwiftUI ile geliştirdiği oyunu Blokla App Store’da yayında.',
 
   'a11y.skip': 'İçeriğe geç',
   'a11y.mainNav': 'Ana menü',
@@ -113,7 +113,7 @@ type Dictionary = Record<UiKey, string>;
 const en: Dictionary = {
   'meta.title': 'Yusuf Gürcan — iOS & Flutter Developer',
   'meta.description':
-    'Yusuf Gürcan: iOS and Flutter developer. Built mobile apps with Flutter in internships, freelance and volunteer projects; now building his own iOS game, Blokla, with Swift and SwiftUI.',
+    'Yusuf Gürcan: iOS and Flutter developer. Built mobile apps with Flutter in internships, freelance and volunteer projects; his iOS game Blokla, built with Swift and SwiftUI, is live on the App Store.',
 
   'a11y.skip': 'Skip to content',
   'a11y.mainNav': 'Main navigation',

@@ -13,11 +13,13 @@
   intro:
     tr: >-
       Flutter ile stajlarda, freelance ve gönüllü projelerde gerçek mobil uygulamalar üzerinde
-      çalıştım. iOS tarafında Swift ve SwiftUI ile kendi oyunum Blokla’yı geliştiriyorum.
+      çalıştım. iOS tarafında Swift ve SwiftUI ile kendi oyunum Blokla’yı geliştirip App Store’da
+      yayınladım.
       Ekibinizin yükünü hafifletmeye hazırım.
     en: >-
       I’ve worked on real mobile apps with Flutter in internships, freelance and volunteer
-      projects. On iOS, I’m building my own game, Blokla, with Swift and SwiftUI. Ready to take
+      projects. On iOS, I built my own game, Blokla, with Swift and SwiftUI and shipped it to the
+      App Store. Ready to take
       work off your team’s plate.
   # CV'deki profil özeti. ATS'ler anahtar kelimeleri burada arar; sade ve somut tutun.
   cv:
@@ -27,13 +29,13 @@
         geliştirme süreçlerinde görev aldım: Flutter ile uygulama geliştirme, REST API
         entegrasyonu, arayüz geliştirme, hata düzeltme ve test. Freelance ve gönüllü projelerde
         yer aldım. Ayrıca Swift ve SwiftUI ile bağımsız olarak geliştirdiğim iOS oyunum Blokla,
-        şu anda App Store inceleme sürecinde. İstanbul Topkapı Üniversitesi Yönetim Bilişim
+        App Store’da yayında. İstanbul Topkapı Üniversitesi Yönetim Bilişim
         Sistemleri öğrencisiyim.
       en: >-
         iOS and Flutter developer. At Uplide Teknoloji and Dijital Gen, worked on mobile app
         development: building apps with Flutter, REST API integration, UI development, bug fixing
         and testing. Took part in freelance and volunteer projects. My iOS game Blokla, built
-        independently with Swift and SwiftUI, is currently in App Store review. Management
+        independently with Swift and SwiftUI, is live on the App Store. Management
         Information Systems student at Istanbul Topkapı University.
   # Girişteki "Bir bakışta" kartı: işe alımcının ilk saniyede göreceği başlıklar.
   glance:
@@ -53,8 +55,8 @@
             Kodlayanlar, and personal projects
       - title: { tr: Kişisel ürün, en: Personal product }
         description:
-          tr: Blokla adlı iOS oyununun bağımsız geliştirilmesi ve App Store yayın süreci
-          en: Independent development of the iOS game Blokla and its App Store release process
+          tr: Bağımsız olarak geliştirip App Store’da yayınladığım iOS oyunu Blokla
+          en: Blokla, an iOS game I built independently and shipped to the App Store
       - title: { tr: Teknik yetkinlikler, en: Technical skills }
         description:
           tr: >-

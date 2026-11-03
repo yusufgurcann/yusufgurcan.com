@@ -5,6 +5,7 @@
  * project's illustrated preview (see PREVIEWS), otherwise nothing.
  */
 import Tag from '@/components/ui/Tag.astro';
+import LinkButton from '@/components/ui/LinkButton.astro';
 import Pending from '@/components/ui/Pending.astro';
 import BloklaPreview from './previews/BloklaPreview.astro';
 import type { Project } from '@/lib/content';
@@ -44,6 +45,23 @@ const Preview = PREVIEWS[project.id];
     </div>
 
     {project.purpose && <p class="featured__purpose">{project.purpose}</p>}
+
+    {
+      project.links.length > 0 && (
+        <div class="featured__actions">
+          {project.links.map((link, index) => (
+            <LinkButton
+              href={link.url}
+              variant={index === 0 ? 'solid' : 'ghost'}
+              external
+              externalHint={t('a11y.external')}
+            >
+              {link.label} <span aria-hidden="true">↗</span>
+            </LinkButton>
+          ))}
+        </div>
+      )
+    }
 
     <dl class="featured__fields">
       {
@@ -96,21 +114,6 @@ const Preview = PREVIEWS[project.id];
         <dt class="caption">{t('projects.status')}</dt>
         <dd class="featured__status">{project.status ?? <Pending {locale} />}</dd>
       </div>
-      {
-        project.links.length > 0 && (
-          <div class="field">
-            <dt class="caption">{t('projects.links')}</dt>
-            <dd class="featured__links">
-              {project.links.map((link) => (
-                <a href={link.url} target="_blank" rel="noopener noreferrer">
-                  {link.label} <span aria-hidden="true">↗</span>
-                  <span class="visually-hidden">{t('a11y.external')}</span>
-                </a>
-              ))}
-            </dd>
-          </div>
-        )
-      }
     </dl>
   </div>
 
@@ -213,6 +216,13 @@ const Preview = PREVIEWS[project.id];
     color: var(--ink-soft);
   }
 
+  .featured__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+    margin-top: var(--space-l);
+  }
+
   .featured__fields {
     display: grid;
     gap: var(--space-m);
@@ -258,11 +268,6 @@ const Preview = PREVIEWS[project.id];
     font-weight: 500;
   }
 
-  .featured__links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-m);
-  }
 
   .featured__media {
     display: grid;

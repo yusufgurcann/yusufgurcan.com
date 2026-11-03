@@ -212,14 +212,14 @@
   color: ink
   organization: iOS & Flutter
   title:
-    tr: iOS’ta Blokla’yı geliştiriyorum
-    en: Building Blokla on iOS
+    tr: Blokla App Store’da yayında
+    en: Blokla is live on the App Store
   period:
     ongoing: true
   summary:
     tr: >-
       Flutter’daki staj ve proje deneyimimin üzerine, iOS tarafında Swift ve SwiftUI ile
-      kendi oyunum Blokla’yı geliştiriyorum.
+      kendi oyunum Blokla’yı geliştirip App Store’da yayınladım; geliştirmeye devam ediyorum.
     en: >-
-      Building on my Flutter internship and project experience, I’m developing my own game,
-      Blokla, on iOS with Swift and SwiftUI.
+      Building on my Flutter internship and project experience, I built my own iOS game, Blokla,
+      with Swift and SwiftUI and shipped it to the App Store; I keep developing it.

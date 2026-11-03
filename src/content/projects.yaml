@@ -47,8 +47,8 @@
       - Turkish and English localization
   stack: [Swift, SwiftUI, Swift Package]
   status:
-    tr: App Store incelemesinde
-    en: In App Store review
+    tr: App Store’da yayında
+    en: Live on the App Store
   focus:
     tr:
       - Blokların ızgaraya doğru yerleşmesi
@@ -60,7 +60,9 @@
       - Touch control precision
       - Score balance
       - Smooth animations
-  links: []
+  links:
+    - label: { tr: App Store’dan indir, en: Download on the App Store }
+      url: https://apps.apple.com/app/id6821699774
 
 - id: iyiligi-kodlayanlar
   order: 2
